@@ -30,8 +30,8 @@ public class FlightsTest {
         driver.quit();
     }
 
-    public void waitPageForLoad(Long timeout) {
-        long end = System.currentTimeMillis() + 5000;
+    private void waitPageForLoad(int timeout) {
+        long end = System.currentTimeMillis() + timeout;
         while (System.currentTimeMillis() < end) {
             WebElement loadingPage = driver.findElement(By.partialLinkText("Do not click the refresh, back or stop button."));
 
@@ -42,7 +42,6 @@ public class FlightsTest {
         }
     }
 
-
     public void fillSearchPage(String from, String to) {
 
         WebElement elementFrom = driver.findElement(By.name("outboundOption.originLocationName"));
@@ -52,11 +51,9 @@ public class FlightsTest {
         elementTo.sendKeys(to);
 
         WebElement searchBtn = driver.findElement(By.xpath("//*[contains(@class,'botButtonSearch')]"));
+        searchBtn.click();
 
-        try {
-            driver.wait(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        waitPageForLoad(5000);
     }
 }
