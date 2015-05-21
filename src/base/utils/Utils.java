@@ -16,7 +16,7 @@ public class Utils {
     public static String browserType;
     public static String runType;
     public static String POS;
-    public static long timeout = 60000;
+    public static int timeout = 60000;
     public static int loggerSeverity;
     public static String pathToScreenshots;
     public static String pathToTestData;
@@ -31,7 +31,7 @@ public class Utils {
     }
 
     public static Handler getHandler() {
-        return handler;
+        return Handler.getInstance();
     }
 
     public static String getConfigFile() {
@@ -90,7 +90,7 @@ public class Utils {
         return Long.parseLong(PROPERTIES.getProperty("timeout"));
     }
 
-    public static void setTimeout(long timeout) {
+    public static void setTimeout(int timeout) {
         Utils.timeout = timeout;
     }
 

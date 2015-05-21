@@ -1,30 +1,27 @@
 package tests;
 
+import base.utils.Utils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 
 public class TestFlights_RT extends BaseTest {
 
-    protected WebDriver driver;
 
+    @Parameters({"host", "port", "browserType", "URL"})
     @BeforeClass(alwaysRun = true)
-    public void setUp() {
+    public void setUp(@Optional("") String host, @Optional("") String port,
+                      @Optional("") String browserType, @Optional("") String URL) {
         // The Firefox driver supports javascript
-        driver = new FirefoxDriver();
 
-        verifyURLNotProduction();
+        handler.start(host, port, browserType, URL);
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         // close the browser instance
-        driver.quit();
+        handler.quit();
     }
 
 
@@ -35,22 +32,22 @@ public class TestFlights_RT extends BaseTest {
     public void setDates(String departureYear, String departureMonth, String departureDay,
                          String arrivalYear, String arrivalMonth, String arrivalDay) {
 
-        WebElement calendarDepart = driver.findElement(By.xpath(Locators.CALENDAR_DEPART_ON));
+        WebElement calendarDepart = handler.findElement(By.xpath(Locators.CALENDAR_DEPART_ON));
         calendarDepart.click();
 
-        WebElement departureDate = driver.findElement(By.xpath(Locators.DATE
-                .replace("[YEAR]", TestData.Dates.YEAR)
-                .replace("[MONTH]", TestData.Dates.DEPARTURE_MONTH)
-                .replace("[DAY]", TestData.Dates.DEPARTURE_DAY)));
+        WebElement departureDate = handler.findElement(By.xpath(Locators.DATE
+                .replace("[YEAR]", departureYear)
+                .replace("[MONTH]", departureMonth)
+                .replace("[DAY]", departureDay)));
         departureDate.click();
 
-        WebElement calendarReturn = driver.findElement(By.xpath(Locators.CALENDAR_RETURN_ON));
+        WebElement calendarReturn = handler.findElement(By.xpath(Locators.CALENDAR_RETURN_ON));
         calendarReturn.click();
 
-        WebElement arrivalDate = driver.findElement(By.xpath(Locators.DATE
-                .replace("[YEAR]", TestData.Dates.YEAR)
-                .replace("[MONTH]", TestData.Dates.ARRIVAL_MONTH)
-                .replace("[DAY]", TestData.Dates.ARRIVAL_DAY)));
+        WebElement arrivalDate = handler.findElement(By.xpath(Locators.DATE
+                .replace("[YEAR]", arrivalYear)
+                .replace("[MONTH]", arrivalMonth)
+                .replace("[DAY]", arrivalDay)));
         arrivalDate.click();
 
     }
@@ -60,25 +57,25 @@ public class TestFlights_RT extends BaseTest {
      * @param to   YYZ
      */
     public void setDestinations(String from, String to) {
-        WebElement elementFrom = driver.findElement(By.xpath(Locators.LOCATION_FROM));
+        WebElement elementFrom = handler.findElement(By.xpath(Locators.LOCATION_FROM));
         elementFrom.sendKeys(from); // set origin location
 
-        WebElement elementTo = driver.findElement(By.xpath(Locators.LOCATION_TO));
+        WebElement elementTo = handler.findElement(By.xpath(Locators.LOCATION_TO));
         elementTo.sendKeys(to);     // set destination
     }
 
 
     public void fillSearchPage() {
 
-        setDestinations("YVR", "YYZ");
+        setDestinations(TestData.Destinations.DESTINATION_FROM, TestData.Destinations.DESTINATION_TO);
 
         setDates(TestData.Dates.YEAR, TestData.Dates.DEPARTURE_MONTH, TestData.Dates.DEPARTURE_DAY,
                 TestData.Dates.YEAR, TestData.Dates.ARRIVAL_MONTH, TestData.Dates.ARRIVAL_DAY);
 
-        WebElement searchBtn = driver.findElement(By.xpath(Locators.SEARCH));
+        WebElement searchBtn = handler.findElement(By.xpath(Locators.SEARCH));
         searchBtn.click();          // proceed with search data
 
-        waitForPageForLoad(5000);
+        Utils.getHandler().waitForPageToLoad(5000);
     }
 
 }

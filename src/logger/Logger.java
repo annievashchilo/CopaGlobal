@@ -15,12 +15,9 @@ public class Logger implements LoggerInterface {
     protected static java.util.logging.Logger perfLogger;
     protected static Logger defaultLogger = new Logger();
     private final int defaultLogLevel = Severity.INFO;
+    private final String dataFormat = "[yyyy-MM-dd HH:mm:ss]";
     protected int severity;
 
-
-    /*
-     *
-     */
     public static String severityToString(int severity) {
         switch (severity) {
             case Severity.ERROR:
@@ -61,7 +58,7 @@ public class Logger implements LoggerInterface {
             return;
 
         if (severity == Severity.EXCEPTION) {
-            shot = " SNAPSHOT: " + Utils.getHandler().takeScreenshot("TestScreenshot");
+            shot = " SCREENSHOT: " + Utils.getHandler().takeScreenshot("TestScreenshot");
 
             defaultLogger.log(defaultLogLevel, shot); //to put HTML tags out of error output, which escapeHTML symbols
             if (exception != null) {
@@ -71,7 +68,7 @@ public class Logger implements LoggerInterface {
             }
 
         } else if (severity == Severity.ERROR) {
-            shot = " SNAPSHOT: " + Utils.getHandler().takeScreenshot("TestScreenshot");
+            shot = " SCREENSHOT: " + Utils.getHandler().takeScreenshot("TestScreenshot");
             log(new Entry(severity, message + shot, exception));
         } else {
             log(new Entry(severity, message, exception));
@@ -166,7 +163,7 @@ public class Logger implements LoggerInterface {
 
         @Override
         public String toString() {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
+            SimpleDateFormat dateFormat = new SimpleDateFormat(dataFormat);
             Date time = Calendar.getInstance().getTime();
             StringBuilder sb = new StringBuilder(dateFormat.format(time));
 
@@ -188,12 +185,13 @@ public class Logger implements LoggerInterface {
     }
 
     public class PerfFormatter extends java.util.logging.Formatter {
-        private final String lineSeparator = java.security.AccessController.doPrivileged(new sun.security.action.GetPropertyAction("line.separator"));
+        private final String lineSeparator = java.security.AccessController.doPrivileged(
+                new sun.security.action.GetPropertyAction("line.separator"));
 
         @Override
         public String format(java.util.logging.LogRecord record) {
             String message = formatMessage(record);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
+            SimpleDateFormat dateFormat = new SimpleDateFormat(dataFormat);
             Date time = Calendar.getInstance().getTime();
             return dateFormat.format(time) + record.getLevel().getName() + ": " + message + lineSeparator;
         }
