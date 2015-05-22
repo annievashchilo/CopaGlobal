@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 public class Logger implements LoggerInterface {
-    protected static java.util.logging.Logger perfLogger;
+
     protected static Logger defaultLogger = new Logger();
     private final int defaultLogLevel = Severity.INFO;
     private final String dataFormat = "[yyyy-MM-dd HH:mm:ss]";

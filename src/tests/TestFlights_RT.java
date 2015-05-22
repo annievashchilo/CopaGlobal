@@ -64,7 +64,6 @@ public class TestFlights_RT extends BaseTest {
         elementTo.sendKeys(to);     // set destination
     }
 
-
     public void fillSearchPage() {
 
         setDestinations(TestData.Destinations.DESTINATION_FROM, TestData.Destinations.DESTINATION_TO);

@@ -4,7 +4,11 @@ import logger.Logger;
 import logger.LoggerFactory;
 import main.Runner;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.io.File;
@@ -18,9 +22,9 @@ public class Handler implements WebDriver {
 
     private static volatile Handler instance;
 
-    private WebDriver m_driver;
+    private RemoteWebDriver m_driver;
 
-    public Handler(WebDriver driver) {
+    public Handler(RemoteWebDriver driver) {
         m_driver = driver;
     }
 
@@ -51,7 +55,7 @@ public class Handler implements WebDriver {
         StringBuilder msg = new StringBuilder("Trying perform takeScreenshot action with name: ").append(fileName);
         StringBuilder screenshotPath = new StringBuilder(Utils.getPathToScreenshots()).append(System.currentTimeMillis());
 
-        File scrFile = ((TakesScreenshot) m_driver).getScreenshotAs(OutputType.FILE);
+        File scrFile = m_driver.getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(scrFile, new File(screenshotPath.toString()));
         } catch (IOException e) {

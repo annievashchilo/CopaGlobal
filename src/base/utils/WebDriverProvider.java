@@ -2,17 +2,17 @@ package base.utils;
 
 import logger.Logger;
 import logger.LoggerFactory;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 
 public class WebDriverProvider {
 
     private static Logger logger = LoggerFactory.getLogger();
-    private static WebDriver webDriver;
+    private static RemoteWebDriver webDriver;
 
     private WebDriverProvider() {
     }
@@ -25,7 +25,7 @@ public class WebDriverProvider {
      *
      * @return WebDriver instance
      */
-    public static WebDriver getWebDriver() {
+    public static RemoteWebDriver getWebDriver() {
         if (webDriver == null) {
             initializeDriver();
         }
