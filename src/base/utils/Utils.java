@@ -11,7 +11,6 @@ public class Utils {
     public static String URL;
     public static String host;
 
-    public static volatile Handler handler;
     public static String port;
     public static String browserType;
     public static String runType;
