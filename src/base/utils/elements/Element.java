@@ -1,6 +1,7 @@
 package base.utils.elements;
 
-public interface Element {
+public interface Element
+{
 
     boolean isDisplayed();
 }

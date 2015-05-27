@@ -2,6 +2,7 @@ package base.utils.elements.containers;
 
 import org.openqa.selenium.WebElement;
 
-public interface ContainerFactory {
+public interface ContainerFactory
+{
     <C extends Container> C create(Class<C> containerClass, WebElement wrappedElement);
 }

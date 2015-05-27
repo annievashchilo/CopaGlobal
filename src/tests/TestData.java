@@ -1,13 +1,18 @@
 package tests;
 
+/**
+ * temporary solution
+ */
 public class TestData {
 
-    class Destinations {
+    public class Destinations
+    {
         public static final String DESTINATION_FROM = "YVR";
         public static final String DESTINATION_TO = "YYZ";
     }
 
-    class Dates {
+    public class Dates
+    {
 
         public static final String YEAR = "2015";
         public static final String DEPARTURE_DAY = "25";

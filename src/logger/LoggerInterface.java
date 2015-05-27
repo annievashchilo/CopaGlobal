@@ -1,12 +1,14 @@
 package logger;
 
 
-public interface LoggerInterface {
+public interface LoggerInterface
+{
     void setSeverity(int severity);
 
     void log(IEntry entry);
 
-    interface Severity {
+    interface Severity
+    {
         int EXCEPTION = 0;
 
         int ERROR = 1;
@@ -22,7 +24,8 @@ public interface LoggerInterface {
         int ALL = Integer.MAX_VALUE;
     }
 
-    interface IEntry {
+    interface IEntry
+    {
         int getSeverity();
 
         String getMessage();

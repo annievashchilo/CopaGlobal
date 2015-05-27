@@ -2,16 +2,19 @@ package base.utils.elements.containers;
 
 import org.openqa.selenium.WebElement;
 
-public abstract class AbstractContainer implements Container {
+public abstract class AbstractContainer implements Container
+{
     private WebElement wrappedElement;
 
     @Override
-    public final void init(final WebElement wrappedElement) {
+    public final void init(final WebElement wrappedElement)
+    {
         this.wrappedElement = wrappedElement;
     }
 
     @Override
-    public boolean isDisplayed() {
+    public boolean isDisplayed()
+    {
         return wrappedElement.isDisplayed();
     }
 }
