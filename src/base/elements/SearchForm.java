@@ -1,14 +1,13 @@
-package base.utils.elements;
+package base.elements;
 
 import base.utils.Utils;
-import base.utils.elements.containers.AbstractContainer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import tests.TestData;
 
-public class SearchForm extends AbstractContainer
+public class SearchForm
 {
 
     public static final String DATE = "//a[@onclick='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
@@ -37,14 +36,19 @@ public class SearchForm extends AbstractContainer
     private WebElement search;
 
 
-    public void fillForm()
+    public void fillForm(String from, String to)
     {
         String numberOfAdults = "2";
-        setDestinations(TestData.Destinations.DESTINATION_FROM, TestData.Destinations.DESTINATION_TO);
+        setDestinations(from, to);
 
         setDates(TestData.Dates.YEAR, TestData.Dates.DEPARTURE_MONTH, TestData.Dates.DEPARTURE_DAY,
                 TestData.Dates.YEAR, TestData.Dates.ARRIVAL_MONTH, TestData.Dates.ARRIVAL_DAY);
         adults.selectByValue(numberOfAdults);
+    }
+
+    public void search(String from, String to)
+    {
+        fillForm(from, to);
 
         search.click();          // proceed with search data
 
@@ -72,7 +76,6 @@ public class SearchForm extends AbstractContainer
 
         dateReturnOn.click();
         Utils.getHandler().findElement(By.xpath(returnDate)).click();
-
     }
 
     /**
@@ -83,6 +86,5 @@ public class SearchForm extends AbstractContainer
     {
         route_from.sendKeys(from); // set origin location
         route_to.sendKeys(to);     // set destination
-
     }
 }

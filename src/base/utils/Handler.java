@@ -207,7 +207,6 @@ public class Handler implements WebDriver
     @Override
     public Navigation navigate()
     {
-        logger.debug("Invoking navigation");
         return m_driver.navigate();
     }
 

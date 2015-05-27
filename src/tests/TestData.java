@@ -3,7 +3,8 @@ package tests;
 /**
  * temporary solution
  */
-public class TestData {
+public class TestData
+{
 
     public class Destinations
     {
