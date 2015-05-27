@@ -9,8 +9,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-import java.io.IOException;
-
 
 public class WebDriverProvider
 {
@@ -49,13 +47,8 @@ public class WebDriverProvider
             webDriver = new InternetExplorerDriver();
         } else if (Utils.browserType.equalsIgnoreCase(DriverTypes.CHROME.actualValue()))
         {
-            try
-            {
-                Runtime.getRuntime().exec("D:\\cdp automation\\Module 3 Java\\CopaGlobal\\webdrivers\\startServer.bat");
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+//            System.setProperty("webdriver.chrome.driver", "D:\\cdp automation\\Module 3 Java\\CopaGlobal\\webdrivers\\chromedriver.exe");
+
             webDriver = new RemoteWebDriver(DesiredCapabilities.chrome());
 
         } else if (Utils.browserType.equalsIgnoreCase(DriverTypes.SAFARI.actualValue()))
