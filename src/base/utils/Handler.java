@@ -35,7 +35,7 @@ public class Handler implements WebDriver
     }
 
     /**
-     * create only 1 instance of DBUtils, to open only 1 connection to database
+     * create only 1 instance of webdriver
      * lazy initialization
      * high performance
      *

@@ -29,6 +29,7 @@ public class Utils
         try
         {
             PROPERTIES.load(new FileInputStream(configFile));
+            loadProperties();
         } catch (IOException e)
         {
             e.printStackTrace();
