@@ -2,7 +2,6 @@ package main;
 
 import base.utils.Handler;
 import base.utils.Utils;
-import base.utils.WebDriverProvider;
 import logger.Logger;
 import logger.LoggerFactory;
 
@@ -31,10 +30,8 @@ public class Runner {
             String URL) {
 
         handler = Utils.getHandler();
-        Utils.loadProperties();
-        WebDriverProvider.getWebDriver();
         handler.open(Utils.URL);
-        handler.waitForPageToLoad(Utils.timeout);
+//        handler.waitForPageToLoad(Utils.timeout);
 
     }
 

@@ -52,7 +52,7 @@ public class Utils
 
     public static void setURL(String URL)
     {
-        Utils.URL = URL;
+        Utils.URL = URL + POS;
     }
 
     public static void setHost(String host)
@@ -122,9 +122,9 @@ public class Utils
             setBrowserType(props.getProperty("browserType"));
             setHost(props.getProperty("host"));
             setPort(props.getProperty("port"));
+            setPOS(props.getProperty("POS"));
             setURL(props.getProperty("URL"));
             setRunType(props.getProperty("runType"));
-            setPOS(props.getProperty("POS"));
             setTimeout(Integer.parseInt(props.getProperty("timeout")));
             setLoggerSeverity(Integer.parseInt(props.getProperty("severity")));
             setPathToScreenshots(props.getProperty("pathToScreenshots"));

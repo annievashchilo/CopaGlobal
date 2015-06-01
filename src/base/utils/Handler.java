@@ -21,7 +21,7 @@ public class Handler implements WebDriver
 
     private static Logger logger = LoggerFactory.getLogger();
 
-    private static volatile Handler instance;
+    private static Handler instance;
 
     private RemoteWebDriver m_driver;
 
@@ -51,7 +51,8 @@ public class Handler implements WebDriver
                 localInstance = instance;
                 if (localInstance == null)
                 {
-                    instance = localInstance = new Handler();
+                    Utils.loadProperties();
+                    instance = localInstance = new Handler(WebDriverProvider.getWebDriver());
                 }
             }
         }
@@ -102,7 +103,7 @@ public class Handler implements WebDriver
         long end = System.currentTimeMillis() + timeout;
         while (System.currentTimeMillis() < end)
         {
-            WebElement loadingPage = findElement(By.partialLinkText("Do not click the refresh, back or stop button."));
+            WebElement loadingPage = m_driver.findElementByPartialLinkText("Do not click the refresh, back or stop button.");
 
             if (!loadingPage.isDisplayed())
             {
