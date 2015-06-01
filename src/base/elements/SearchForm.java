@@ -4,13 +4,14 @@ import base.utils.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import tests.TestData;
 
 public class SearchForm
 {
 
-    public static final String DATE = "//a[@onclick='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
+    public static final String DATE = "//div[id='calendar1Dialog'] * a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
     @FindBy(id = "outboundOption.originLocationName")
     private WebElement route_from;
     @FindBy(id = "outboundOption.destinationLocationName")
@@ -34,6 +35,11 @@ public class SearchForm
 
     @FindBy(xpath = "//*[contains(@class,'botButtonSearch')]")
     private WebElement search;
+
+    public SearchForm()
+    {
+        PageFactory.initElements(Utils.getHandler(), this);
+    }
 
 
     public void fillForm(String from, String to)
