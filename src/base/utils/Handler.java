@@ -30,9 +30,6 @@ public class Handler implements WebDriver
         m_driver = driver;
     }
 
-    public Handler()
-    {
-    }
 
     /**
      * create only 1 instance of webdriver
@@ -103,8 +100,8 @@ public class Handler implements WebDriver
         long end = System.currentTimeMillis() + timeout;
         while (System.currentTimeMillis() < end)
         {
-            WebElement loadingPage = m_driver.findElementByPartialLinkText("Do not click the refresh, back or stop button.");
-
+            WebElement loadingPage = m_driver.findElementByPartialLinkText(
+                    "Do not click the refresh, back or stop button.");
             if (!loadingPage.isDisplayed())
             {
                 break;
@@ -115,6 +112,7 @@ public class Handler implements WebDriver
     public void verifyURLNotProduction()
     {
         Assert.assertFalse(isTextPresent("//*[contains(text, 'pointed to Production')]"));
+        logger.info("Opened UI is not production");
     }
 
     public void open(String URL)

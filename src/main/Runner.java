@@ -11,7 +11,7 @@ public class Runner {
     protected static Handler handler;
 
     public static void main(String args[]) {
-        System.out.println("Hi!");
+        logger.info("Hi!");
     }
 
 

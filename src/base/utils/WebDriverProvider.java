@@ -46,8 +46,6 @@ public class WebDriverProvider
             webDriver = new InternetExplorerDriver();
         } else if (Utils.browserType.equalsIgnoreCase(DriverTypes.CHROME.actualValue()))
         {
-//            System.setProperty("webdriver.chrome.driver", "D:\\cdp automation\\Module 3 Java\\CopaGlobal\\webdrivers\\chromedriver.exe");
-
             webDriver = new RemoteWebDriver(DesiredCapabilities.chrome());
 
         } else if (Utils.browserType.equalsIgnoreCase(DriverTypes.SAFARI.actualValue()))
