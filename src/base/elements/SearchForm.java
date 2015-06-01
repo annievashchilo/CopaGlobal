@@ -59,14 +59,12 @@ public class SearchForm
                          String arrivalYear, String arrivalMonth, String arrivalDay)
     {
 
-        String datePath = "div[id='calendar1Dialog'] * a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]})']";
-
-        String departDate = datePath
+        String departDate = DATE
                 .replace("[YEAR]", departureYear)
                 .replace("[MONTH]", departureMonth)
                 .replace("[DAY]", departureDay);
 
-        String returnDate = datePath
+        String returnDate = DATE
                 .replace("[YEAR]", arrivalYear)
                 .replace("[MONTH]", arrivalMonth)
                 .replace("[DAY]", arrivalDay);
