@@ -53,6 +53,11 @@ public class Utils
 
     public static void setURL(String URL)
     {
+        Utils.URL = URL;
+    }
+
+    public static void setURL(String URL, String POS)
+    {
         Utils.URL = URL + POS;
     }
 
@@ -124,7 +129,7 @@ public class Utils
             setHost(props.getProperty("host"));
             setPort(props.getProperty("port"));
             setPOS(props.getProperty("POS"));
-            setURL(props.getProperty("URL"));
+            setURL(props.getProperty("URL"), POS);
             setRunType(props.getProperty("runType"));
             setTimeout(Integer.parseInt(props.getProperty("timeout")));
             setLoggerSeverity(Integer.parseInt(props.getProperty("severity")));

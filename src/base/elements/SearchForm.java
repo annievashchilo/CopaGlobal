@@ -1,7 +1,11 @@
 package base.elements;
 
 import base.utils.Utils;
+import logger.Logger;
+import logger.LoggerFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -10,31 +14,38 @@ import tests.TestData;
 
 public class SearchForm
 {
-
-    public static final String DATE = "//div[id='calendar1Dialog'] * a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
-    @FindBy(id = "outboundOption.originLocationName")
+    public static final String DATE = "a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
+    private static Logger logger = LoggerFactory.getLogger();
+    @FindBy(xpath = "//input[@id='outboundOption.originLocationName']")
     private WebElement route_from;
-    @FindBy(id = "outboundOption.destinationLocationName")
+    @FindBy(xpath = "//input[@id='outboundOption.destinationLocationName']")
     private WebElement route_to;
-    @FindBy(id = "tripTypeRT")
+    @FindBy(xpath = "//input[@id='tripTypeRT']")
     private WebElement roundTrip;
-    @FindBy(id = "tripTypeOW")
+    @FindBy(xpath = "//input[@id='tripTypeOW']")
     private WebElement oneWay;
-    @FindBy(id = "tripTypeMC")
+    @FindBy(xpath = "//input[@id='tripTypeMC']")
     private WebElement multiCity;
-    @FindBy(id = "guestTypes[0].amount")
+    @FindBy(xpath = "//select[@id='guestTypes[0].amount']")
     private Select adults;
-    @FindBy(id = "guestTypes[1].amount")
+    @FindBy(xpath = "//select[@id='guestTypes[1].amount']")
     private Select children;
-    @FindBy(id = "guestTypes[2].amount")
+    @FindBy(xpath = "//select[@id='guestTypes[3].amount']")
     private Select infants;
-    @FindBy(id = "departureDate1")
+    @FindBy(xpath = "//input[@id='departureDate1']")
     private WebElement dateDepartOn;
-    @FindBy(id = "departureDate2")
+    @FindBy(xpath = "//input[@id='departureDate2']")
     private WebElement dateReturnOn;
-
+    @FindBy(xpath = "//*[contains(@id,'drilldownItem')]")
+    private Select routeDropDown;
     @FindBy(xpath = "//*[contains(@class,'botButtonSearch')]")
     private WebElement search;
+    @FindBy(css = "td.calendarArea > div > a > img")
+    private WebElement departCalendarIcon;
+    @FindBy(css = "css=#returnBlockDate > table > tbody > tr > td.calendarArea > div > a > img")
+    private WebElement returnCalendarIcon;
+    @FindBy(xpath = "//a[contains(text(),'Close')]")
+    private WebElement closeCalendar;
 
     public SearchForm()
     {
@@ -62,33 +73,59 @@ public class SearchForm
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
-                         String arrivalYear, String arrivalMonth, String arrivalDay)
+                         String arrivalYear, String arrivalMonth, String arrivalDay) throws NoSuchElementException
     {
+        try
+        {
+            departCalendarIcon.click();
 
-        String departDate = DATE
-                .replace("[YEAR]", departureYear)
-                .replace("[MONTH]", departureMonth)
-                .replace("[DAY]", departureDay);
+            String s = "a onclick=\"calendar.setDay({year:2015,month:5,day:25});return false";
 
-        String returnDate = DATE
-                .replace("[YEAR]", arrivalYear)
-                .replace("[MONTH]", arrivalMonth)
-                .replace("[DAY]", arrivalDay);
+            String departDate = DATE
+                    .replace("[YEAR]", departureYear)
+                    .replace("[MONTH]", departureMonth)
+                    .replace("[DAY]", departureDay);
 
-        dateDepartOn.click();
-        Utils.getHandler().findElement(By.xpath(departDate)).click();
+            String returnDate = DATE
+                    .replace("[YEAR]", arrivalYear)
+                    .replace("[MONTH]", arrivalMonth)
+                    .replace("[DAY]", arrivalDay);
 
-        dateReturnOn.click();
-        Utils.getHandler().findElement(By.xpath(returnDate)).click();
+//            dateDepartOn.click();
+            Utils.getHandler().findElement(By.xpath(departDate)).click();
+
+            returnCalendarIcon.click();
+
+//            dateReturnOn.click();
+            Utils.getHandler().findElement(By.xpath(returnDate)).click();
+
+            if (closeCalendar.isDisplayed())
+            {
+                closeCalendar.click();
+            }
+        } catch (NoSuchElementException e)
+        {
+            logger.debug("Date element was not found", e);
+        }
     }
 
     /**
      * @param from YVR
      * @param to   YYZ
      */
-    public void setDestinations(String from, String to)
+    public void setDestinations(String from, String to) throws NoSuchElementException
     {
-        route_from.sendKeys(from); // set origin location
-        route_to.sendKeys(to);     // set destination
+        try
+        {
+            route_from.sendKeys(from); // set origin location
+            route_from.sendKeys(Keys.RETURN);
+
+
+            route_to.sendKeys(to);     // set destination
+            route_from.sendKeys(Keys.RETURN);
+        } catch (NoSuchElementException e)
+        {
+            logger.debug("Route element was not found", e);
+        }
     }
 }

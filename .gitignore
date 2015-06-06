@@ -15,3 +15,6 @@ CopaGlobal.iml
 out
 .idea/
 target
+
+webdrivers/chromedriver_win32.zip
+webdrivers/chromedriver.exe

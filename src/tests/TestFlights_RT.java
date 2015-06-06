@@ -1,6 +1,5 @@
 package tests;
 
-import base.pages.SearchPage;
 import base.utils.Utils;
 import org.testng.annotations.*;
 
@@ -27,10 +26,11 @@ public class TestFlights_RT extends BaseTest
 
 
     @Test
-    public void test()
+    public void testRoundTripFlight()
     {
-        new SearchPage().search(TestData.Destinations.DESTINATION_FROM, TestData.Destinations.DESTINATION_TO);
-        logger.info("Starting testcase TestCopaRoundTrip");
+        logger.info("Starting testcase TestWestJetFlight_RoundTrip");
+        sp.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO);
+
     }
 
 

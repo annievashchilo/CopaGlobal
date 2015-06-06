@@ -8,8 +8,8 @@ public class TestData
 
     public class Destinations
     {
-        public static final String DESTINATION_FROM = "YVR";
-        public static final String DESTINATION_TO = "YYZ";
+        public static final String ROUTE_FROM = "YVR";
+        public static final String ROUTE_TO = "YYZ";
     }
 
     public class Dates
@@ -17,10 +17,10 @@ public class TestData
 
         public static final String YEAR = "2015";
         public static final String DEPARTURE_DAY = "25";
-        public static final String DEPARTURE_MONTH = "25";
+        public static final String DEPARTURE_MONTH = "6";
 
         public static final String ARRIVAL_DAY = "25";
-        public static final String ARRIVAL_MONTH = "25";
+        public static final String ARRIVAL_MONTH = "7";
     }
 }
 

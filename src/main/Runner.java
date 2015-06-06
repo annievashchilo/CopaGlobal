@@ -30,7 +30,7 @@ public class Runner {
             String URL) {
 
         handler = Utils.getHandler();
-        handler.open(Utils.URL);
+        handler.open(URL);
 //        handler.waitForPageToLoad(Utils.timeout);
 
     }
