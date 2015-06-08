@@ -1,6 +1,5 @@
 package base.elements;
 
-import base.utils.Handler;
 import base.utils.Utils;
 import logger.Logger;
 import logger.LoggerFactory;
@@ -15,9 +14,8 @@ import tests.TestData;
 
 public class SearchForm
 {
+    public static final String DATE = "a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
     private static Logger logger = LoggerFactory.getLogger();
-    public String DATE = "//a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
-    private Handler handler = Utils.getHandler();
     @FindBy(xpath = "//input[@id='outboundOption.originLocationName']")
     private WebElement route_from;
     @FindBy(xpath = "//input[@id='outboundOption.destinationLocationName']")
@@ -31,9 +29,9 @@ public class SearchForm
     @FindBy(xpath = "//select[@id='guestTypes[0].amount']")
     private Select adults;
     @FindBy(xpath = "//select[@id='guestTypes[1].amount']")
-    private WebElement children;
+    private Select children;
     @FindBy(xpath = "//select[@id='guestTypes[3].amount']")
-    private WebElement infants;
+    private Select infants;
     @FindBy(xpath = "//input[@id='departureDate1']")
     private WebElement dateDepartOn;
     @FindBy(xpath = "//input[@id='departureDate2']")
@@ -51,11 +49,11 @@ public class SearchForm
 
     public SearchForm()
     {
-        PageFactory.initElements(handler, this);
+        PageFactory.initElements(Utils.getHandler(), this);
     }
 
 
-    public void fillSearchForm(String from, String to)
+    public void fillForm(String from, String to)
     {
         String numberOfAdults = "2";
         setDestinations(from, to);
@@ -67,11 +65,11 @@ public class SearchForm
 
     public void search(String from, String to)
     {
-        fillSearchForm(from, to);
+        fillForm(from, to);
 
         search.click();          // proceed with search data
 
-        Utils.getHandler().waitForNextPageToLoad(5000);
+        Utils.getHandler().waitForPageToLoad(5000);
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
@@ -79,6 +77,10 @@ public class SearchForm
     {
         try
         {
+            departCalendarIcon.click();
+
+            String s = "a onclick=\"calendar.setDay({year:2015,month:5,day:25});return false";
+
             String departDate = DATE
                     .replace("[YEAR]", departureYear)
                     .replace("[MONTH]", departureMonth)
@@ -90,17 +92,12 @@ public class SearchForm
                     .replace("[DAY]", arrivalDay);
 
 //            dateDepartOn.click();
-            departCalendarIcon.click();
-            handler.findElement(By.xpath(departDate)).click();
+            Utils.getHandler().findElement(By.xpath(departDate)).click();
 
-            if (closeCalendar.isDisplayed())
-            {
-                closeCalendar.click();
-            }
+            returnCalendarIcon.click();
 
 //            dateReturnOn.click();
-            returnCalendarIcon.click();
-            handler.findElement(By.xpath(returnDate)).click();
+            Utils.getHandler().findElement(By.xpath(returnDate)).click();
 
             if (closeCalendar.isDisplayed())
             {
@@ -120,17 +117,12 @@ public class SearchForm
     {
         try
         {
-            // set origin location
-            handler.executeScript("arguments[0].setAttribute('value', arguments[1])",
-                    route_from, "Vancouver (YVR)");
+            route_from.sendKeys(from); // set origin location
             route_from.sendKeys(Keys.RETURN);
 
-            // set destination
-            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
-                    route_to, "Toronto (YYZ)");
-            route_from.sendKeys(Keys.RETURN);
-            //            route_to.sendKeys(to);
 
+            route_to.sendKeys(to);     // set destination
+            route_from.sendKeys(Keys.RETURN);
         } catch (NoSuchElementException e)
         {
             logger.debug("Route element was not found", e);
