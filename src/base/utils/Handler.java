@@ -42,7 +42,7 @@ public class Handler extends RemoteWebDriver
 
     public Boolean isElementPresent(By xpath)
     {
-        return findElements(xpath).size() > 0;
+        return m_driver.findElements(xpath).size() > 0;
     }
 
 
@@ -51,7 +51,7 @@ public class Handler extends RemoteWebDriver
         boolean b = false;
         try
         {
-            b = getPageSource().contains(txtValue);
+            b = m_driver.getPageSource().contains(txtValue);
             return b;
         } catch (Exception e)
         {
@@ -85,7 +85,7 @@ public class Handler extends RemoteWebDriver
 
     public void open(String URL)
     {
-        get(URL);
+        m_driver.get(URL);
         verifyURLNotProduction();
         logger.debug(String.format("Page at %s is opened", URL), null);
     }

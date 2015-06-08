@@ -1,6 +1,7 @@
 package logger;
 
 import base.utils.Utils;
+import org.openqa.selenium.OutputType;
 import org.testng.Assert;
 import org.testng.Reporter;
 
@@ -66,7 +67,7 @@ public class Logger implements LoggerInterface
 
         if (severity == Severity.EXCEPTION)
         {
-            shot = " SCREENSHOT: " + Utils.getHandler().takeScreenshot("TestScreenshot");
+            shot = " SCREENSHOT: " + Utils.getHandler().getScreenshotAs(OutputType.FILE);
 
             defaultLogger.log(defaultLogLevel, shot); //to put HTML tags out of error output, which escapeHTML symbols
             if (exception != null)
@@ -79,7 +80,7 @@ public class Logger implements LoggerInterface
 
         } else if (severity == Severity.ERROR)
         {
-            shot = " SCREENSHOT: " + Utils.getHandler().takeScreenshot("TestScreenshot");
+            shot = " SCREENSHOT: " + Utils.getHandler().getScreenshotAs(OutputType.FILE);
             log(new Entry(severity, message + shot, exception));
         } else
         {
