@@ -53,7 +53,7 @@ public class SearchForm
     }
 
 
-    public void fillForm(String from, String to)
+    public void fillSearchForm(String from, String to)
     {
         String numberOfAdults = "2";
         setDestinations(from, to);
@@ -65,11 +65,11 @@ public class SearchForm
 
     public void search(String from, String to)
     {
-        fillForm(from, to);
+        fillSearchForm(from, to);
 
         search.click();          // proceed with search data
 
-        Utils.getHandler().waitForPageToLoad(5000);
+        Utils.getHandler().waitForNextPageToLoad(5000);
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
@@ -117,12 +117,17 @@ public class SearchForm
     {
         try
         {
-            route_from.sendKeys(from); // set origin location
+            // set origin location
+            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
+                    route_from, "Vancouver (YVR)");
             route_from.sendKeys(Keys.RETURN);
 
-
-            route_to.sendKeys(to);     // set destination
+            // set destination
+            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
+                    route_to, "Toronto (YYZ)");
             route_from.sendKeys(Keys.RETURN);
+            //            route_to.sendKeys(to);
+
         } catch (NoSuchElementException e)
         {
             logger.debug("Route element was not found", e);

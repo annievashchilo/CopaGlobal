@@ -3,11 +3,10 @@ package main;
 import base.utils.Handler;
 import base.utils.Utils;
 import logger.Logger;
-import logger.LoggerFactory;
 
 public class Runner {
 
-    public static Logger logger = LoggerFactory.getLogger();
+    public static Logger logger = Logger.getDefault();
     protected static Handler handler;
 
     public static void main(String args[]) {

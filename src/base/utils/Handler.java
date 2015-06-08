@@ -23,7 +23,7 @@ public class Handler implements WebDriver
 
     private static Handler instance;
 
-    private RemoteWebDriver m_driver;
+    public RemoteWebDriver m_driver;
 
     public Handler(RemoteWebDriver driver)
     {
@@ -50,6 +50,7 @@ public class Handler implements WebDriver
                 {
                     Utils.loadProperties();
                     instance = localInstance = new Handler(WebDriverProvider.getWebDriver());
+
                 }
             }
         }
@@ -78,6 +79,7 @@ public class Handler implements WebDriver
         return findElements(xpath).size() > 0;
     }
 
+
     public boolean isTextPresent(String txtValue)
     {
         boolean b = false;
@@ -95,7 +97,7 @@ public class Handler implements WebDriver
     }
 
 
-    public void waitForPageToLoad(int timeout)
+    public void waitForNextPageToLoad(int timeout)
     {
         long end = System.currentTimeMillis() + timeout;
         while (System.currentTimeMillis() < end)
@@ -200,6 +202,7 @@ public class Handler implements WebDriver
     public TargetLocator switchTo()
     {
         logger.debug("Invoking swithTo");
+
         return m_driver.switchTo();
     }
 
@@ -214,4 +217,6 @@ public class Handler implements WebDriver
     {
         return m_driver.manage();
     }
+
+
 }

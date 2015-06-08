@@ -2,9 +2,6 @@ package base.pages;
 
 import base.elements.SearchForm;
 
-/**
- * Created by Anny on 24.05.15.
- */
 public class SearchPage extends SearchForm
 {
 
