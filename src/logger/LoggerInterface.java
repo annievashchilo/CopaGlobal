@@ -17,9 +17,7 @@ public interface LoggerInterface
 
         int INFO = 3;
 
-        int PERFOMANCE = 4;
-
-        int DEBUG = 5;
+        int DEBUG = 4;
 
         int ALL = Integer.MAX_VALUE;
     }

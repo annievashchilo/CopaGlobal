@@ -14,7 +14,7 @@ import tests.TestData;
 
 public class SearchForm
 {
-    public static final String DATE = "a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
+    public static final String DATE = "//a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
     private static Logger logger = LoggerFactory.getLogger();
     @FindBy(xpath = "//input[@id='outboundOption.originLocationName']")
     private WebElement route_from;
@@ -29,9 +29,9 @@ public class SearchForm
     @FindBy(xpath = "//select[@id='guestTypes[0].amount']")
     private Select adults;
     @FindBy(xpath = "//select[@id='guestTypes[1].amount']")
-    private Select children;
+    private WebElement children;
     @FindBy(xpath = "//select[@id='guestTypes[3].amount']")
-    private Select infants;
+    private WebElement infants;
     @FindBy(xpath = "//input[@id='departureDate1']")
     private WebElement dateDepartOn;
     @FindBy(xpath = "//input[@id='departureDate2']")
@@ -77,10 +77,6 @@ public class SearchForm
     {
         try
         {
-            departCalendarIcon.click();
-
-            String s = "a onclick=\"calendar.setDay({year:2015,month:5,day:25});return false";
-
             String departDate = DATE
                     .replace("[YEAR]", departureYear)
                     .replace("[MONTH]", departureMonth)
@@ -92,11 +88,16 @@ public class SearchForm
                     .replace("[DAY]", arrivalDay);
 
 //            dateDepartOn.click();
+            departCalendarIcon.click();
             Utils.getHandler().findElement(By.xpath(departDate)).click();
 
-            returnCalendarIcon.click();
+            if (closeCalendar.isDisplayed())
+            {
+                closeCalendar.click();
+            }
 
 //            dateReturnOn.click();
+            returnCalendarIcon.click();
             Utils.getHandler().findElement(By.xpath(returnDate)).click();
 
             if (closeCalendar.isDisplayed())

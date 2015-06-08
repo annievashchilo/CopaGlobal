@@ -6,7 +6,6 @@ import main.Runner;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
@@ -16,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-public class Handler implements WebDriver
+public class Handler extends RemoteWebDriver
 {
 
     private static Logger logger = LoggerFactory.getLogger();
@@ -40,21 +39,11 @@ public class Handler implements WebDriver
      */
     public static Handler getInstance()
     {
-        Handler localInstance = instance;
-        if (localInstance == null)
+        if (instance == null)
         {
-            synchronized (Handler.class)
-            {
-                localInstance = instance;
-                if (localInstance == null)
-                {
-                    Utils.loadProperties();
-                    instance = localInstance = new Handler(WebDriverProvider.getWebDriver());
-
-                }
-            }
+            instance = new Handler(WebDriverProvider.getWebDriver());
         }
-        return localInstance;
+        return instance;
     }
 
     public String takeScreenshot(String fileName)
