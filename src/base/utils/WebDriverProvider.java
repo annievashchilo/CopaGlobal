@@ -2,11 +2,8 @@ package base.utils;
 
 import logger.Logger;
 import logger.LoggerFactory;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
 
 
 public class WebDriverProvider
@@ -15,9 +12,6 @@ public class WebDriverProvider
     private static Logger logger = LoggerFactory.getLogger();
     private static RemoteWebDriver webDriver;
 
-    private WebDriverProvider()
-    {
-    }
 
     /**
      * *firefox     firefox web driver
@@ -40,17 +34,17 @@ public class WebDriverProvider
     {
         if (Utils.browserType == null || Utils.browserType.equalsIgnoreCase(DriverTypes.FIREFOX.actualValue()))
         {
-            webDriver = new FirefoxDriver();
+            webDriver = new RemoteWebDriver(DesiredCapabilities.firefox());
         } else if (Utils.browserType.equalsIgnoreCase(DriverTypes.IEXPLORER.actualValue()))
         {
-            webDriver = new InternetExplorerDriver();
+            webDriver = new RemoteWebDriver(DesiredCapabilities.internetExplorer());
         } else if (Utils.browserType.equalsIgnoreCase(DriverTypes.CHROME.actualValue()))
         {
             webDriver = new RemoteWebDriver(DesiredCapabilities.chrome());
 
         } else if (Utils.browserType.equalsIgnoreCase(DriverTypes.SAFARI.actualValue()))
         {
-            webDriver = new SafariDriver();
+            webDriver = new RemoteWebDriver(DesiredCapabilities.safari());
         } else
         {
             logger.exception("Unknown browser type: '" + Utils.browserType + "'");
