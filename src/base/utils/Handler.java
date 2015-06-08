@@ -13,38 +13,21 @@ public class Handler extends RemoteWebDriver
 
     private static Logger logger = LoggerFactory.getLogger();
 
-    private static Handler instance;
-
     public RemoteWebDriver m_driver;
 
-    public Handler(RemoteWebDriver driver)
+    public Handler()
     {
-        m_driver = driver;
+        this.m_driver = WebDriverProvider.getWebDriver();
     }
 
-
-    /**
-     * create only 1 instance of webdriver
-     * lazy initialization
-     * high performance
-     *
-     * @return localInstance
-     */
-    public static Handler getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new Handler(WebDriverProvider.getWebDriver());
-        }
-        return instance;
+    public static Handler getInstance() {
+        return HandlerHolder.HOLDER_INSTANCE;
     }
-
 
     public Boolean isElementPresent(By xpath)
     {
         return m_driver.findElements(xpath).size() > 0;
     }
-
 
     public boolean isTextPresent(String txtValue)
     {
@@ -61,7 +44,6 @@ public class Handler extends RemoteWebDriver
             return b;
         }
     }
-
 
     public void waitForNextPageToLoad(int timeout)
     {
@@ -93,6 +75,10 @@ public class Handler extends RemoteWebDriver
     public void start(String host, String port, String browserType, String URL)
     {
         new Runner().run(host, port, browserType, URL);
+    }
+
+    public static class HandlerHolder {
+        public static final Handler HOLDER_INSTANCE = new Handler();
     }
 
 

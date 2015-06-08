@@ -1,5 +1,6 @@
 package base.elements;
 
+import base.utils.Handler;
 import base.utils.Utils;
 import logger.Logger;
 import logger.LoggerFactory;
@@ -14,8 +15,9 @@ import tests.TestData;
 
 public class SearchForm
 {
-    public static final String DATE = "//a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
     private static Logger logger = LoggerFactory.getLogger();
+    public String DATE = "//a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
+    private Handler handler = Utils.getHandler();
     @FindBy(xpath = "//input[@id='outboundOption.originLocationName']")
     private WebElement route_from;
     @FindBy(xpath = "//input[@id='outboundOption.destinationLocationName']")
@@ -49,7 +51,7 @@ public class SearchForm
 
     public SearchForm()
     {
-        PageFactory.initElements(Utils.getHandler(), this);
+        PageFactory.initElements(handler, this);
     }
 
 
@@ -89,7 +91,7 @@ public class SearchForm
 
 //            dateDepartOn.click();
             departCalendarIcon.click();
-            Utils.getHandler().findElement(By.xpath(departDate)).click();
+            handler.findElement(By.xpath(departDate)).click();
 
             if (closeCalendar.isDisplayed())
             {
@@ -98,7 +100,7 @@ public class SearchForm
 
 //            dateReturnOn.click();
             returnCalendarIcon.click();
-            Utils.getHandler().findElement(By.xpath(returnDate)).click();
+            handler.findElement(By.xpath(returnDate)).click();
 
             if (closeCalendar.isDisplayed())
             {
@@ -119,7 +121,7 @@ public class SearchForm
         try
         {
             // set origin location
-            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
+            handler.executeScript("arguments[0].setAttribute('value', arguments[1])",
                     route_from, "Vancouver (YVR)");
             route_from.sendKeys(Keys.RETURN);
 
