@@ -109,7 +109,7 @@ public class Handler extends RemoteWebDriver
     {
         get(URL);
         verifyURLNotProduction();
-        logger.debug(String.format("Page at %s is opened", URL), null);
+        logger.info(String.format("Page at %s is opened", URL), null);
     }
 
     public void start(String host, String port, String browserType, String URL)
@@ -120,7 +120,7 @@ public class Handler extends RemoteWebDriver
     @Override
     public void get(String url)
     {
-        logger.debug("Opening url..." + url);
+        logger.info("Opening url..." + url);
         m_driver.get(url);
     }
 
@@ -128,7 +128,7 @@ public class Handler extends RemoteWebDriver
     public String getCurrentUrl()
     {
         String currentUrl = m_driver.getCurrentUrl();
-        logger.debug("Current URL: " + currentUrl);
+        logger.info("Current URL: " + currentUrl);
         return currentUrl;
     }
 
@@ -136,7 +136,7 @@ public class Handler extends RemoteWebDriver
     public String getTitle()
     {
         String title = m_driver.getTitle();
-        logger.debug("Page title: " + title);
+        logger.info("Page title: " + title);
         return title;
     }
 
@@ -162,14 +162,14 @@ public class Handler extends RemoteWebDriver
     @Override
     public void close()
     {
-        logger.debug("Close the current window, quitting the browser if it's the last window currently open.");
+        logger.info("Close the current window, quitting the browser if it's the last window currently open.");
         m_driver.close();
     }
 
     @Override
     public void quit()
     {
-        logger.debug("Quits this driver, closing every associated window.");
+        logger.info("Quits this driver, closing every associated window.");
         m_driver.quit();
     }
 

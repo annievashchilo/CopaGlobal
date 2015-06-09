@@ -43,11 +43,11 @@ public class SearchForm
     private static WebElement search;
     @FindBy(css = "td.calendarArea > div > a > img")
     private static WebElement departCalendarIcon;
-    @FindBy(css = "css=#returnBlockDate > table > tbody > tr > td.calendarArea > div > a > img")
+    @FindBy(css = "#returnBlockDate > table > tbody > tr > td.calendarArea > div > a > img")
     private static WebElement returnCalendarIcon;
     @FindBy(xpath = "//a[contains(text(),'Close')]")
     private static WebElement closeCalendar;
-    public String DATE = "//a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
+    public String DATE = "//a[@onclick='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
     private Handler handler = Utils.getHandler();
 
     public SearchForm()
@@ -81,13 +81,12 @@ public class SearchForm
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
-                         String arrivalYear, String arrivalMonth, String arrivalDay) throws NoSuchElementException
+                         String arrivalYear, String arrivalMonth, String arrivalDay)
+            throws NoSuchElementException
     {
+        logger.info("Setting dates");
         try
         {
-            departCalendarIcon.click();
-
-            String s = "a onclick=\"calendar.setDay({year:2015,month:5,day:25});return false";
 
             String departDate = DATE
                     .replace("[YEAR]", departureYear)
@@ -99,12 +98,11 @@ public class SearchForm
                     .replace("[MONTH]", arrivalMonth)
                     .replace("[DAY]", arrivalDay);
 
-//            dateDepartOn.click();
+
+            departCalendarIcon.click();
             Utils.getHandler().findElement(By.xpath(departDate)).click();
 
             returnCalendarIcon.click();
-
-//            dateReturnOn.click();
             Utils.getHandler().findElement(By.xpath(returnDate)).click();
 
             if (closeCalendar.isDisplayed())
@@ -113,7 +111,7 @@ public class SearchForm
             }
         } catch (NoSuchElementException e)
         {
-            logger.trace("Date element was not found.", e);
+            logger.trace(e);
         }
     }
 
