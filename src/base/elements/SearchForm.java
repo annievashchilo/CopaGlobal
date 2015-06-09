@@ -1,6 +1,5 @@
 package base.elements;
 
-import base.utils.Handler;
 import base.utils.Utils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -39,7 +38,7 @@ public class SearchForm
     private static WebElement dateReturnOn;
     @FindBy(xpath = "//*[contains(@id,'drilldownItem')]")
     private static WebElement routeDropDown;
-    @FindBy(xpath = "//*[contains(@class,'botButtonSearch')]")
+    @FindBy(xpath = "//a[@onclick='checkReservationStatus();return false;']")
     private static WebElement search;
     @FindBy(css = "td.calendarArea > div > a > img")
     private static WebElement departCalendarIcon;
@@ -48,7 +47,7 @@ public class SearchForm
     @FindBy(xpath = "//a[contains(text(),'Close')]")
     private static WebElement closeCalendar;
     public String DATE = "//a[@onclick='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
-    private Handler handler = Utils.getHandler();
+
 
     public SearchForm()
     {
@@ -74,10 +73,9 @@ public class SearchForm
     {
         fillSearchForm(from, to);
 
-//        Select searchBtn = new Select(search);
-//        searchBtn.selectByValue("SEARCH");
+        search.click();
 
-//        Utils.getHandler().waitForNextPageToLoad(5000);
+        Utils.getHandler().waitForNextPageToLoad();
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
@@ -125,18 +123,18 @@ public class SearchForm
         {
             // set origin location
             Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
-                    route_from, "Vancouver (YVR)");
+                    route_from, from);
             route_from.sendKeys(Keys.RETURN);
 
             // set destination
             Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
-                    route_to, "Toronto (YYZ)");
+                    route_to, to);
             route_from.sendKeys(Keys.RETURN);
             //            route_to.sendKeys(to);
 
         } catch (NoSuchElementException e)
         {
-            logger.trace("Route element was not found.", e);
+            logger.error("Route element was not found.", e);
         }
     }
 }

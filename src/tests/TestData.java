@@ -8,8 +8,8 @@ public class TestData
 
     public class Destinations
     {
-        public static final String ROUTE_FROM = "YVR";
-        public static final String ROUTE_TO = "YYZ";
+        public static final String ROUTE_FROM = "YYZ";
+        public static final String ROUTE_TO = "YVR";
     }
 
     public class Dates

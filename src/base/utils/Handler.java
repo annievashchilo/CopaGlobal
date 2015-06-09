@@ -85,9 +85,9 @@ public class Handler extends RemoteWebDriver
         }
     }
 
-    public void waitForNextPageToLoad(int timeout)
+    public void waitForNextPageToLoad()
     {
-        long end = System.currentTimeMillis() + timeout;
+        long end = System.currentTimeMillis() + Utils.timeout;
         while (System.currentTimeMillis() < end)
         {
             WebElement loadingPage = m_driver.findElementByPartialLinkText(

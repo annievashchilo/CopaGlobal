@@ -11,4 +11,9 @@ public class SearchPage extends SearchForm
 
         super.search(from, to);
     }
+
+    public SearchForm getSearchForm()
+    {
+        return new SearchForm();
+    }
 }
