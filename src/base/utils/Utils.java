@@ -1,7 +1,7 @@
 package base.utils;
 
-import logger.Logger;
-import logger.LoggerFactory;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class Utils
     public static int loggerSeverity;
     public static String pathToScreenshots;
     public static String pathToTestData;
-    public static Logger logger = LoggerFactory.getLogger();
+    private static Logger logger = Logger.getLogger(Utils.class.getName());
     private static Properties PROPERTIES = new Properties();
 
     static
@@ -38,6 +38,7 @@ public class Utils
 
     public static Handler getHandler()
     {
+        PropertyConfigurator.configure("log4j.properties");
         return Handler.getInstance();
     }
 
@@ -91,11 +92,6 @@ public class Utils
         Utils.timeout = timeout;
     }
 
-    public static int getLoggerSeverity()
-    {
-        return loggerSeverity;
-    }
-
     public static void setLoggerSeverity(int loggerSeverity)
     {
         Utils.loggerSeverity = loggerSeverity;
@@ -138,7 +134,7 @@ public class Utils
         } catch (IOException e)
         {
             e.printStackTrace();
-            logger.exception(e.getLocalizedMessage());
+            logger.trace(e.getLocalizedMessage());
         }
     }
 }

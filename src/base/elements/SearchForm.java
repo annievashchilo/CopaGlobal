@@ -1,8 +1,8 @@
 package base.elements;
 
+import base.utils.Handler;
 import base.utils.Utils;
-import logger.Logger;
-import logger.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -12,40 +12,43 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import tests.TestData;
 
+
 public class SearchForm
 {
-    public static final String DATE = "a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
-    private static Logger logger = LoggerFactory.getLogger();
+
+    private static Logger logger = Logger.getLogger(SearchForm.class.getName());
     @FindBy(xpath = "//input[@id='outboundOption.originLocationName']")
-    private WebElement route_from;
+    private static WebElement route_from;
     @FindBy(xpath = "//input[@id='outboundOption.destinationLocationName']")
-    private WebElement route_to;
+    private static WebElement route_to;
     @FindBy(xpath = "//input[@id='tripTypeRT']")
-    private WebElement roundTrip;
+    private static WebElement roundTrip;
     @FindBy(xpath = "//input[@id='tripTypeOW']")
-    private WebElement oneWay;
+    private static WebElement oneWay;
     @FindBy(xpath = "//input[@id='tripTypeMC']")
-    private WebElement multiCity;
+    private static WebElement multiCity;
     @FindBy(xpath = "//select[@id='guestTypes[0].amount']")
-    private Select adults;
+    private static WebElement adults;
     @FindBy(xpath = "//select[@id='guestTypes[1].amount']")
-    private Select children;
+    private static WebElement children;
     @FindBy(xpath = "//select[@id='guestTypes[3].amount']")
-    private Select infants;
+    private static WebElement infants;
     @FindBy(xpath = "//input[@id='departureDate1']")
-    private WebElement dateDepartOn;
+    private static WebElement dateDepartOn;
     @FindBy(xpath = "//input[@id='departureDate2']")
-    private WebElement dateReturnOn;
+    private static WebElement dateReturnOn;
     @FindBy(xpath = "//*[contains(@id,'drilldownItem')]")
-    private Select routeDropDown;
+    private static WebElement routeDropDown;
     @FindBy(xpath = "//*[contains(@class,'botButtonSearch')]")
-    private WebElement search;
+    private static WebElement search;
     @FindBy(css = "td.calendarArea > div > a > img")
-    private WebElement departCalendarIcon;
+    private static WebElement departCalendarIcon;
     @FindBy(css = "css=#returnBlockDate > table > tbody > tr > td.calendarArea > div > a > img")
-    private WebElement returnCalendarIcon;
+    private static WebElement returnCalendarIcon;
     @FindBy(xpath = "//a[contains(text(),'Close')]")
-    private WebElement closeCalendar;
+    private static WebElement closeCalendar;
+    public String DATE = "//a[onclick*='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
+    private Handler handler = Utils.getHandler();
 
     public SearchForm()
     {
@@ -53,23 +56,28 @@ public class SearchForm
     }
 
 
-    public void fillForm(String from, String to)
+    public void fillSearchForm(String from, String to)
     {
         String numberOfAdults = "2";
+
+        roundTrip.click();
         setDestinations(from, to);
 
         setDates(TestData.Dates.YEAR, TestData.Dates.DEPARTURE_MONTH, TestData.Dates.DEPARTURE_DAY,
                 TestData.Dates.YEAR, TestData.Dates.ARRIVAL_MONTH, TestData.Dates.ARRIVAL_DAY);
-        adults.selectByValue(numberOfAdults);
+
+        Select dropdownADT = new Select(adults);
+        dropdownADT.selectByValue(numberOfAdults);
     }
 
     public void search(String from, String to)
     {
-        fillForm(from, to);
+        fillSearchForm(from, to);
 
-        search.click();          // proceed with search data
+//        Select searchBtn = new Select(search);
+//        searchBtn.selectByValue("SEARCH");
 
-        Utils.getHandler().waitForPageToLoad(5000);
+//        Utils.getHandler().waitForNextPageToLoad(5000);
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
@@ -105,7 +113,7 @@ public class SearchForm
             }
         } catch (NoSuchElementException e)
         {
-            logger.debug("Date element was not found", e);
+            logger.trace("Date element was not found.", e);
         }
     }
 
@@ -117,15 +125,20 @@ public class SearchForm
     {
         try
         {
-            route_from.sendKeys(from); // set origin location
+            // set origin location
+            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
+                    route_from, "Vancouver (YVR)");
             route_from.sendKeys(Keys.RETURN);
 
-
-            route_to.sendKeys(to);     // set destination
+            // set destination
+            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
+                    route_to, "Toronto (YYZ)");
             route_from.sendKeys(Keys.RETURN);
+            //            route_to.sendKeys(to);
+
         } catch (NoSuchElementException e)
         {
-            logger.debug("Route element was not found", e);
+            logger.trace("Route element was not found.", e);
         }
     }
 }

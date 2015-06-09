@@ -1,7 +1,6 @@
 package base.utils;
 
-import logger.Logger;
-import logger.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -9,9 +8,12 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class WebDriverProvider
 {
 
-    private static Logger logger = LoggerFactory.getLogger();
+    private static Logger logger = Logger.getLogger(Handler.class.getName());
     private static RemoteWebDriver webDriver;
 
+    private WebDriverProvider()
+    {
+    }
 
     /**
      * *firefox     firefox web driver
@@ -47,7 +49,7 @@ public class WebDriverProvider
             webDriver = new RemoteWebDriver(DesiredCapabilities.safari());
         } else
         {
-            logger.exception("Unknown browser type: '" + Utils.browserType + "'");
+            logger.error("Unknown browser type: '" + Utils.browserType + "'");
         }
         return webDriver;
     }

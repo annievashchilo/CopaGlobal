@@ -1,17 +1,22 @@
 package tests;
 
 import base.utils.Utils;
+import org.apache.log4j.Logger;
 import org.testng.annotations.*;
 
 
 public class TestFlights_RT extends BaseTest
 {
 
+    private static Logger logger;
+
     @Parameters({"host", "port", "browserType", "URL"})
     @BeforeClass(alwaysRun = true)
     public void setUp(@Optional("") String host, @Optional("") String port,
                       @Optional("") String browserType, @Optional("") String URL)
     {
+        logger = Logger.getLogger(TestFlights_RT.class.getName());
+
         // The Firefox driver supports javascript
 
         handler.start(host, port, browserType, Utils.URL);

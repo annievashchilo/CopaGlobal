@@ -2,14 +2,14 @@ package main;
 
 import base.utils.Handler;
 import base.utils.Utils;
-import logger.Logger;
-import logger.LoggerFactory;
+import org.apache.log4j.Logger;
 
 public class Runner
 {
 
-    public static Logger logger = LoggerFactory.getLogger();
     protected static Handler handler;
+    private static Logger logger = Logger.getLogger(Runner.class.getName());
+
 
     public static void main(String args[])
     {

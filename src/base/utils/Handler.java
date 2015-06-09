@@ -1,12 +1,10 @@
 package base.utils;
 
-import logger.Logger;
-import logger.LoggerFactory;
 import main.Runner;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
@@ -14,22 +12,31 @@ import org.testng.Assert;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
-public class Handler implements WebDriver
+public class Handler extends RemoteWebDriver
 {
 
-    private static Logger logger = LoggerFactory.getLogger();
+    private static Logger logger = Logger.getLogger(Handler.class.getName());
 
-    private static Handler instance;
+    public RemoteWebDriver m_driver;
 
-    private RemoteWebDriver m_driver;
 
-    public Handler(RemoteWebDriver driver)
+    public Handler()
     {
-        m_driver = driver;
+        m_driver = WebDriverProvider.getWebDriver();
     }
 
+    /**
+     * create only 1 instance of webdriver
+     * lazy initialization
+     * very high performance
+     *
+     * @return instance of Handler class
+     */
+    public static Handler getInstance()
+    {
+        return HandlerHolder.HOLDER_INSTANCE;
+    }
 
     /**
      * create only 1 instance of webdriver
@@ -38,23 +45,7 @@ public class Handler implements WebDriver
      *
      * @return localInstance
      */
-    public static Handler getInstance()
-    {
-        Handler localInstance = instance;
-        if (localInstance == null)
-        {
-            synchronized (Handler.class)
-            {
-                localInstance = instance;
-                if (localInstance == null)
-                {
-                    Utils.loadProperties();
-                    instance = localInstance = new Handler(WebDriverProvider.getWebDriver());
-                }
-            }
-        }
-        return localInstance;
-    }
+
 
     public String takeScreenshot(String fileName)
     {
@@ -94,8 +85,7 @@ public class Handler implements WebDriver
         }
     }
 
-
-    public void waitForPageToLoad(int timeout)
+    public void waitForNextPageToLoad(int timeout)
     {
         long end = System.currentTimeMillis() + timeout;
         while (System.currentTimeMillis() < end)
@@ -126,7 +116,6 @@ public class Handler implements WebDriver
     {
         new Runner().run(host, port, browserType, URL);
     }
-
 
     @Override
     public void get(String url)
@@ -184,34 +173,10 @@ public class Handler implements WebDriver
         m_driver.quit();
     }
 
-    @Override
-    public Set<String> getWindowHandles()
+    public static class HandlerHolder
     {
-        return m_driver.getWindowHandles();
+        public static final Handler HOLDER_INSTANCE = new Handler();
     }
 
-    @Override
-    public String getWindowHandle()
-    {
-        return m_driver.getWindowHandle();
-    }
 
-    @Override
-    public TargetLocator switchTo()
-    {
-        logger.debug("Invoking swithTo");
-        return m_driver.switchTo();
-    }
-
-    @Override
-    public Navigation navigate()
-    {
-        return m_driver.navigate();
-    }
-
-    @Override
-    public Options manage()
-    {
-        return m_driver.manage();
-    }
 }
