@@ -2,6 +2,7 @@ package tests;
 
 import base.utils.Utils;
 import org.apache.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 
@@ -34,8 +35,24 @@ public class TestFlights_RT extends BaseTest
     public void testRoundTripFlight()
     {
         logger.info("Starting testcase TestWestJetFlight_RoundTrip");
-        sp.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO);
+        searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO);
 
+        selectPage.verifySelectPageOpened();
+        String totalPriceSelectPage = selectPage.getTotalPrice();
+        selectPage.nextPage();
+
+        Assert.assertTrue(handler.isTextPresent("Review Flights"));
+        reviewPage.verifyRoutesPresent();
+        String totalPriceReviewPage = reviewPage.getTotalPrice();
+        verifyTotalPricesEqual(totalPriceSelectPage, totalPriceReviewPage);
+        reviewPage.nextPage();
+
+        guestsPage.fill();
+        guestsPage.nextPage();
+
+        String expectedGuestName = TestData.TravellerInfo.travellerTitle + " " + TestData.TravellerInfo.firstName + " " + TestData.TravellerInfo.lastName;
+        seatsPage.verifyGuestName(expectedGuestName);
+        seatsPage.nextPage();
     }
 
 

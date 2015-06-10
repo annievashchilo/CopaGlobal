@@ -11,11 +11,11 @@ public class SelectPage
 {
     private static Logger logger = Logger.getLogger(SelectPage.class.getName());
     @FindBy(linkText = "Select departing flight")
-    private WebElement selectPage;
+    private static WebElement selectPage;
     @FindBy(xpath = "//td[@id='summaryBot_Left_botTotalPrice']")
-    private WebElement totalPrice;
+    private static WebElement totalPrice;
     @FindBy(xpath = "//a[@id='pgButtonNext']")
-    private WebElement buttonNext;
+    private static WebElement buttonNext;
 
 
     public SelectPage()

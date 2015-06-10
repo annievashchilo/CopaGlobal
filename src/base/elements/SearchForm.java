@@ -74,8 +74,6 @@ public class SearchForm
         fillSearchForm(from, to);
 
         search.click();
-
-        Utils.getHandler().waitForNextPageToLoad();
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,

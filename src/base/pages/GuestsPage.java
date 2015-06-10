@@ -13,4 +13,5 @@ public class GuestsPage extends TravellersForm
         }
         Utils.getHandler().waitForNextPageToLoad();
     }
+
 }
