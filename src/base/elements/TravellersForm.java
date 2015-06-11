@@ -35,7 +35,7 @@ public class TravellersForm
     {
 
         Select dropdownADT = new Select(travelerTitle);
-        dropdownADT.selectByValue(TestData.TravellerInfo.travellerTitle);
+        dropdownADT.selectByVisibleText(TestData.TravellerInfo.travellerTitle);
 
         firstName.sendKeys(TestData.TravellerInfo.firstName);
         lastName.sendKeys(TestData.TravellerInfo.lastName);

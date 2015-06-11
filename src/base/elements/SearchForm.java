@@ -57,7 +57,7 @@ public class SearchForm
 
     public void fillSearchForm(String from, String to)
     {
-        String numberOfAdults = "2";
+        String numberOfAdults = "1";
 
         roundTrip.click();
         setDestinations(from, to);
@@ -116,28 +116,31 @@ public class SearchForm
      * @param from YVR
      * @param to   YYZ
      */
-    public void setDestinations(String from, String to) throws NoSuchElementException
+    public void setDestinations(String from, String to)
     {
         try
         {
             // set origin location
-            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
-                    route_from, from);
+//            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
+//                    route_from, from);
             route_from.sendKeys(from);
-            Select routesDdl = new Select(routeDropDown);
-            routesDdl.selectByValue(from);
+            Thread.sleep(1000);
             route_from.sendKeys(Keys.RETURN);
 
             // set destination
-            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
-                    route_to, to);
-            routesDdl.selectByValue(to);
+//            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
+//                    route_to, to);
+            route_to.sendKeys(to);
+            Thread.sleep(1000);
             route_to.sendKeys(Keys.RETURN);
             //            route_to.sendKeys(to);
 
         } catch (NoSuchElementException e)
         {
             logger.error("Route element was not found.", e);
+        } catch (InterruptedException e)
+        {
+            logger.error(e);
         }
     }
 }

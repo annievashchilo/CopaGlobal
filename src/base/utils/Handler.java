@@ -75,17 +75,18 @@ public class Handler extends RemoteWebDriver {
     }
 
     public void waitForNextPageToLoad() {
-        long end = System.currentTimeMillis() + Utils.timeout;
-        while (System.currentTimeMillis() < end) {
-            if (!isTextPresent("Please wait while we retrieve your results.")) {
-                break;
-            }
+        try
+        {
+            Thread.sleep(20000);
+        } catch (InterruptedException e)
+        {
+            logger.trace(e);
         }
     }
 
     public void verifyURLNotProduction() {
         Assert.assertFalse(isTextPresent("//*[contains(text, 'pointed to Production')]"));
-        logger.info("Opened UI is not production");
+        logger.info("Opened UI is not for production");
     }
 
     public void open(String URL) {
