@@ -6,10 +6,10 @@ public class SearchPage extends SearchForm
 {
 
 
-    public void search(String from, String to)
+    public SelectPage search(String from, String to)
     {
-
-        super.search(from, to);
+        super.searchFlights(from, to);
+        return new SelectPage();
     }
 
 }

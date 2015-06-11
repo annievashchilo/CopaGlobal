@@ -44,12 +44,4 @@ public class TravellersForm
         mobileNum.sendKeys(TestData.TravellerInfo.mobileNumber);
     }
 
-    public void nextPage()
-    {
-        if (buttonNext.isEnabled())
-        {
-            buttonNext.click();
-        }
-        Utils.getHandler().waitForNextPageToLoad();
-    }
 }

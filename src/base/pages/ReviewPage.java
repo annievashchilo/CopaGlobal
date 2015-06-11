@@ -53,12 +53,13 @@ public class ReviewPage
         logger.info("Route TO is present on Review Page");
     }
 
-    public void nextPage()
+    public GuestsPage nextPage()
     {
         if (buttonNext.isEnabled())
         {
             buttonNext.click();
         }
-        Utils.getHandler().waitForNextPageToLoad();
+        Utils.getHandler().waitForPageToLoad();
+        return new GuestsPage();
     }
 }

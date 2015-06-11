@@ -35,21 +35,21 @@ public class TestFlights_RT extends BaseTest
     public void testRoundTripFlight()
     {
         logger.info("Starting testcase TestWestJetFlight_RoundTrip");
-        searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO);
+        selectPage = searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO);
 
-        Assert.assertTrue(handler.isTextPresent("Select Flights"), "'Select Flights' Page was not opened");
+        Assert.assertTrue(handler.isTextPresent("Select departing flight"), "'Select departing flight' Page was not opened");
         String totalPriceSelectPage = selectPage.getTotalPrice();
-        selectPage.nextPage();
+        reviewPage = selectPage.nextPage();
 
         Assert.assertTrue(handler.isTextPresent("Review Flights"), "'Review Flights' Page was not opened");
         reviewPage.verifyRoutesPresent();
         String totalPriceReviewPage = reviewPage.getTotalPrice();
         verifyTotalPricesEqual(totalPriceSelectPage, totalPriceReviewPage);
-        reviewPage.nextPage();
+        guestsPage = reviewPage.nextPage();
 
         Assert.assertTrue(handler.isTextPresent("Guest information"), "'Guest information' Page was not opened");
         guestsPage.fill();
-        guestsPage.nextPage();
+        seatsPage = guestsPage.nextPage();
 
         Assert.assertTrue(handler.isTextPresent("Select your seats"), "'Select your seats' Page was not opened");
         String expectedGuestName = TestData.TravellerInfo.travellerTitle + " " + TestData.TravellerInfo.firstName + " " + TestData.TravellerInfo.lastName;

@@ -13,10 +13,10 @@ public class BaseTest
 
     public static Logger logger = Logger.getLogger(BaseTest.class.getName());
     public SearchPage searchPage = new SearchPage();
-    public SelectPage selectPage = new SelectPage();
-    public ReviewPage reviewPage = new ReviewPage();
-    public GuestsPage guestsPage = new GuestsPage();
-    public SelectSeatsPage seatsPage = new SelectSeatsPage();
+    public SelectPage selectPage;
+    public ReviewPage reviewPage;
+    public GuestsPage guestsPage;
+    public SelectSeatsPage seatsPage;
     protected Handler handler = Utils.getHandler();
 
 

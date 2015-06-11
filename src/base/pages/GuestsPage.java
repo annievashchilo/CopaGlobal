@@ -5,13 +5,14 @@ import base.utils.Utils;
 
 public class GuestsPage extends TravellersForm
 {
-    public void nextPage()
+    public SelectSeatsPage nextPage()
     {
         if (TravellersForm.buttonNext.isEnabled())
         {
             buttonNext.click();
         }
-        Utils.getHandler().waitForNextPageToLoad();
+        Utils.getHandler().waitForPageToLoad();
+        return new SelectSeatsPage();
     }
 
 }

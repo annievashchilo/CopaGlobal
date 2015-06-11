@@ -74,10 +74,11 @@ public class Handler extends RemoteWebDriver {
         }
     }
 
-    public void waitForNextPageToLoad() {
+    public void waitForPageToLoad()
+    {
         try
         {
-            Thread.sleep(20000);
+            Thread.sleep(30000);
         } catch (InterruptedException e)
         {
             logger.trace(e);
@@ -91,6 +92,7 @@ public class Handler extends RemoteWebDriver {
 
     public void open(String URL) {
         get(URL);
+        waitForPageToLoad();
         verifyURLNotProduction();
         logger.info(String.format("Page at %s is opened", URL), null);
     }

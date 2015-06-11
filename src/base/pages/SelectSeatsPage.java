@@ -29,7 +29,7 @@ public class SelectSeatsPage
         {
             buttonNext.click();
         }
-        Utils.getHandler().waitForNextPageToLoad();
+        Utils.getHandler().waitForPageToLoad();
     }
 
     public void verifyGuestName(String expectedName)

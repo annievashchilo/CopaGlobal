@@ -37,12 +37,13 @@ public class SelectPage
         return totalPrice.getText();
     }
 
-    public void nextPage()
+    public ReviewPage nextPage()
     {
         if (buttonNext.isEnabled())
         {
             buttonNext.click();
         }
-        Utils.getHandler().waitForNextPageToLoad();
+        Utils.getHandler().waitForPageToLoad();
+        return new ReviewPage();
     }
 }

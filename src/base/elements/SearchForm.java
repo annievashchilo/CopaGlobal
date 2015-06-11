@@ -69,12 +69,12 @@ public class SearchForm
         dropdownADT.selectByValue(numberOfAdults);
     }
 
-    public void search(String from, String to)
+    public void searchFlights(String from, String to)
     {
         fillSearchForm(from, to);
 
         search.click();
-        Utils.getHandler().waitForNextPageToLoad();
+        Utils.getHandler().waitForPageToLoad();
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
