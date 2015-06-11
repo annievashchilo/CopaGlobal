@@ -74,6 +74,7 @@ public class SearchForm
         fillSearchForm(from, to);
 
         search.click();
+        Utils.getHandler().waitForNextPageToLoad();
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
@@ -122,12 +123,16 @@ public class SearchForm
             // set origin location
             Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
                     route_from, from);
+            route_from.sendKeys(from);
+            Select routesDdl = new Select(routeDropDown);
+            routesDdl.selectByValue(from);
             route_from.sendKeys(Keys.RETURN);
 
             // set destination
             Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
                     route_to, to);
-            route_from.sendKeys(Keys.RETURN);
+            routesDdl.selectByValue(to);
+            route_to.sendKeys(Keys.RETURN);
             //            route_to.sendKeys(to);
 
         } catch (NoSuchElementException e)

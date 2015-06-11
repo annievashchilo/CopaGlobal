@@ -37,7 +37,6 @@ public class TestFlights_RT extends BaseTest
         logger.info("Starting testcase TestWestJetFlight_RoundTrip");
         searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO);
 
-        selectPage.verifySelectPageOpened();
         String totalPriceSelectPage = selectPage.getTotalPrice();
         selectPage.nextPage();
 

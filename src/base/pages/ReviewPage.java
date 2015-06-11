@@ -47,9 +47,9 @@ public class ReviewPage
 
     public void verifyRoutesPresent()
     {
-        Assert.assertTrue(Utils.getHandler().findElementByPartialLinkText(TestData.Destinations.ROUTE_FROM).isDisplayed());
+        Assert.assertTrue(Utils.getHandler().isTextPresent(TestData.Destinations.ROUTE_FROM));
         logger.info("Route FROM is present on Review Page");
-        Assert.assertTrue(Utils.getHandler().findElementByPartialLinkText(TestData.Destinations.ROUTE_TO).isDisplayed());
+        Assert.assertTrue(Utils.getHandler().isTextPresent(TestData.Destinations.ROUTE_TO));
         logger.info("Route TO is present on Review Page");
     }
 
