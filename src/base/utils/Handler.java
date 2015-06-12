@@ -4,6 +4,7 @@ import main.Runner;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -76,9 +77,14 @@ public class Handler extends RemoteWebDriver {
 
     public void waitForPageToLoad()
     {
+        sleep(30000);
+    }
+
+    public void sleep(int millis)
+    {
         try
         {
-            Thread.sleep(30000);
+            Thread.sleep(millis);
         } catch (InterruptedException e)
         {
             logger.trace(e);
@@ -97,8 +103,9 @@ public class Handler extends RemoteWebDriver {
         logger.info(String.format("Page at %s is opened", URL), null);
     }
 
-    public void start(String host, String port, String browserType, String URL) {
-        new Runner().run(host, port, browserType, URL);
+    public void start()
+    {
+        new Runner().run();
     }
 
     @Override
@@ -149,9 +156,16 @@ public class Handler extends RemoteWebDriver {
         m_driver.quit();
     }
 
+    public void highlightElement(RemoteWebDriver driver, WebElement element)
+    {
+        String bg = element.getCssValue("backgroundColor");
+        JavascriptExecutor js = driver;
+        js.executeScript("arguments[0].style.backgroundColor = '" + "red" + "'", element);
+        sleep(2000);
+        js.executeScript("arguments[0].style.backgroundColor = '" + bg + "'", element);
+    }
+
     public static class HandlerHolder {
         public static final Handler HOLDER_INSTANCE = new Handler();
     }
-
-
 }

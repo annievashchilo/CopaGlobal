@@ -20,21 +20,17 @@ public class Runner
     /**
      * Runs webdriver session, launches browser and opens URL
      *
-     * @param host        selenium host
-     * @param port        selenium port
-     * @param browserType browser type
-     * @param URL         website url
      */
-    public static void run(
-            String host,
-            String port,
-            String browserType,
-            String URL)
+    public static void run()
     {
 
         handler = Utils.getHandler();
-        handler.open(URL);
+        handler.open(Utils.getURL());
 //        handler.waitForPageToLoad(Utils.timeout);
+    }
+
+    public static void runGrid()
+    {
 
     }
 

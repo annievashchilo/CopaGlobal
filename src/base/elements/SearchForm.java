@@ -55,7 +55,7 @@ public class SearchForm
     }
 
 
-    public void fillSearchForm(String from, String to)
+    public void fillSearchForm(String from, String to, boolean isOW)
     {
         String numberOfAdults = "1";
 
@@ -63,27 +63,28 @@ public class SearchForm
         setDestinations(from, to);
 
         setDates(TestData.Dates.YEAR, TestData.Dates.DEPARTURE_MONTH, TestData.Dates.DEPARTURE_DAY,
-                TestData.Dates.YEAR, TestData.Dates.ARRIVAL_MONTH, TestData.Dates.ARRIVAL_DAY);
+                TestData.Dates.YEAR, TestData.Dates.ARRIVAL_MONTH, TestData.Dates.ARRIVAL_DAY, isOW);
 
         Select dropdownADT = new Select(adults);
         dropdownADT.selectByValue(numberOfAdults);
     }
 
-    public void searchFlights(String from, String to)
+    public void searchFlights(String from, String to, boolean isOW)
     {
-        fillSearchForm(from, to);
+        fillSearchForm(from, to, isOW);
 
         search.click();
         Utils.getHandler().waitForPageToLoad();
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
-                         String arrivalYear, String arrivalMonth, String arrivalDay)
+                         String arrivalYear, String arrivalMonth, String arrivalDay, boolean isOW)
             throws NoSuchElementException
     {
         logger.info("Setting dates");
         try
         {
+
 
             String departDate = DATE
                     .replace("[YEAR]", departureYear)
@@ -99,8 +100,11 @@ public class SearchForm
             departCalendarIcon.click();
             Utils.getHandler().findElement(By.xpath(departDate)).click();
 
-            returnCalendarIcon.click();
-            Utils.getHandler().findElement(By.xpath(returnDate)).click();
+            if (!isOW)
+            {
+                returnCalendarIcon.click();
+                Utils.getHandler().findElement(By.xpath(returnDate)).click();
+            }
 
             if (closeCalendar.isDisplayed())
             {
