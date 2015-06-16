@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class SelectPage
+public class SelectPage extends Page
 {
     private static Logger logger = Logger.getLogger(SelectPage.class.getName());
     @FindBy(linkText = "Select departing flight")

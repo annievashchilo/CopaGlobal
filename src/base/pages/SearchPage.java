@@ -2,13 +2,12 @@ package base.pages;
 
 import base.elements.SearchForm;
 
-public class SearchPage extends SearchForm
+public class SearchPage extends Page
 {
-
 
     public SelectPage search(String from, String to, boolean isOW)
     {
-        super.searchFlights(from, to, isOW);
+        new SearchForm().searchFlights(from, to, isOW);
         return new SelectPage();
     }
 

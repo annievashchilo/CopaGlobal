@@ -55,7 +55,7 @@ public class TestFlights_OW extends BaseTest
         guestsPage = reviewPage.nextPage();
 
         Assert.assertTrue(handler.isTextPresent("Guest information"), "'Guest information' Page was not opened");
-        guestsPage.fill();
+        guestsPage.travelForm.fill();
         seatsPage = guestsPage.nextPage();
 
         Assert.assertTrue(handler.isTextPresent("Select your seats"), "'Select your seats' Page was not opened");

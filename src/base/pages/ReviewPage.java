@@ -10,7 +10,7 @@ import tests.TestData;
 import java.util.logging.Logger;
 
 
-public class ReviewPage
+public class ReviewPage extends Page
 {
     @FindBy(css = "tr.rowLast.rowOdd > td.colLast.colPrice > div > b")
     private static WebElement totalFare;

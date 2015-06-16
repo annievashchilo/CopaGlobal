@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-public class SelectSeatsPage
+public class SelectSeatsPage extends Page
 {
     @FindBy(css = "div.nameAreaWrap > table > tbody > tr > td.name > div")
     private static WebElement guestName;
