@@ -7,11 +7,12 @@ public class GuestsPage extends Page
 {
 
     public static TravellersForm travelForm = new TravellersForm();
+
     public SelectSeatsPage nextPage()
     {
-        if (travelForm.buttonNext.isEnabled())
+        if (TravellersForm.buttonNext.isEnabled())
         {
-            travelForm.buttonNext.click();
+            TravellersForm.buttonNext.click();
         }
         Utils.getHandler().waitForPageToLoad();
         return new SelectSeatsPage();

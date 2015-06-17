@@ -1,7 +1,7 @@
 package tests;
 
+import base.pages.GuestsPage;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 public class TestFlights_RT extends BaseTest
 {
 
-    protected ThreadLocal<RemoteWebDriver> threadDriver = null;
+
 
     @BeforeClass(alwaysRun = true)
     public void setUp()
@@ -37,7 +37,7 @@ public class TestFlights_RT extends BaseTest
         guestsPage = reviewPage.nextPage();
 
         Assert.assertTrue(handler.isTextPresent("Guest information"), "'Guest information' Page was not opened");
-        guestsPage.travelForm.fill();
+        GuestsPage.travelForm.fill();
         seatsPage = guestsPage.nextPage();
 
         Assert.assertTrue(handler.isTextPresent("Select your seats"), "'Select your seats' Page was not opened");
