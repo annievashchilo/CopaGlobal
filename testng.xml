@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="GRID SAMPLE TEST" thread-count="2">
+    <parameter name="browserType" value="chrome"/>
+    <parameter name="browserType" value="firefox"/>
+    <test name="GRID TEST WITH SERIAL EXECTION WITH BROWSER CHROME">
+        <classes>
+            <class name="tests.TestFlights_OW"/>
+        </classes>
+    </test>
+    <test name="GRID TEST WITH SERIAL EXECTION WITH BROWSER FF ">
+        <classes>
+            <class name="tests.TestFlights_RT"/>
+        </classes>
+    </test>
+</suite>

@@ -4,6 +4,7 @@ import base.pages.*;
 import base.utils.Handler;
 import base.utils.Utils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -23,8 +24,6 @@ public class Runner
     public static void main(String args[])
     {
         logger.info("Hi!");
-        initPages();
-        run();
     }
 
     public static void initPages()
@@ -43,28 +42,37 @@ public class Runner
     /**
      * Runs webdriver session, launches browser and opens URL
      */
-    public static void run()
+    public static void run(String browserType)
     {
         initPages();
-        runGrid();
+        runGrid(browserType);
         handler = Utils.getHandler();
         handler.open(Utils.getURL());
 //        handler.waitForPageToLoad(Utils.timeout);
     }
 
-    private static void runGrid()
+    private static void runGrid(String browserType)
     {
         threadDriver = new ThreadLocal<RemoteWebDriver>();
-        DesiredCapabilities ff = new DesiredCapabilities();
+        DesiredCapabilities dc = new DesiredCapabilities();
         DesiredCapabilities chr = new DesiredCapabilities();
-        FirefoxProfile fp = new FirefoxProfile();
-        chr.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
-        ff.setCapability(FirefoxDriver.PROFILE, fp);
-        ff.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
+
+        if (browserType.contains("firefox"))
+        {
+            FirefoxProfile fp = new FirefoxProfile();
+            dc.setCapability(FirefoxDriver.PROFILE, fp);
+            dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
+        } else if (Utils.browserType.contains("chrome"))
+        {
+            dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
+        }
+
+        dc.setPlatform(Platform.ANY);
+
         try
         {
-            threadDriver.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chr));
-            threadDriver.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), ff));
+            threadDriver.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), dc));
+            threadDriver.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), dc));
         } catch (MalformedURLException e)
         {
             e.printStackTrace();

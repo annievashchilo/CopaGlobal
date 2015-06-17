@@ -4,6 +4,8 @@ import base.pages.GuestsPage;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 
@@ -13,10 +15,11 @@ public class TestFlights_RT extends BaseTest
 
 
     @BeforeClass(alwaysRun = true)
-    public void setUp()
+    @Parameters("browserType")
+    public void setUp(@Optional String browserType)
     {
         logger = Logger.getLogger(BaseTest.class.getName());
-        handler.start();
+        handler.start(browserType);
     }
 
 

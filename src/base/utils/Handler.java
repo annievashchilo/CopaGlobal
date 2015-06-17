@@ -70,9 +70,8 @@ public class Handler extends RemoteWebDriver {
             return b;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            return b;
         }
+            return b;
     }
 
     public void waitForPageToLoad()
@@ -103,9 +102,9 @@ public class Handler extends RemoteWebDriver {
         logger.info(String.format("Page at %s is opened", URL), null);
     }
 
-    public void start()
+    public void start(String browser)
     {
-        new Runner().run();
+        new Runner().run(browser);
     }
 
     @Override
