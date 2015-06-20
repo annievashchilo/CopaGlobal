@@ -6,8 +6,6 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class TestFlights_OW extends BaseTest
@@ -15,11 +13,12 @@ public class TestFlights_OW extends BaseTest
     protected ThreadLocal<RemoteWebDriver> threadDriver = null;
 
     @BeforeClass(alwaysRun = true)
-    @Parameters("browserType")
-    public void setUp(@Optional String browserType)
+    public void setUp()
     {
         logger = Logger.getLogger(BaseTest.class.getName());
-        handler.start(browserType);
+        handler.start();
+
+
     }
 
 

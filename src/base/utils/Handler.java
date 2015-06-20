@@ -63,15 +63,18 @@ public class Handler extends RemoteWebDriver {
         return findElements(xpath).size() > 0;
     }
 
-    public boolean isTextPresent(String txtValue) {
+    public boolean isTextPresent(String txtValue)
+    {
         boolean b = false;
-        try {
+        try
+        {
             b = getPageSource().contains(txtValue);
             return b;
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println(e.getMessage());
         }
-            return b;
+        return b;
     }
 
     public void waitForPageToLoad()
@@ -102,9 +105,9 @@ public class Handler extends RemoteWebDriver {
         logger.info(String.format("Page at %s is opened", URL), null);
     }
 
-    public void start(String browser)
+    public void start()
     {
-        new Runner().run(browser);
+        new Runner().run();
     }
 
     @Override
