@@ -24,7 +24,7 @@ public class TestFlights_RT extends BaseTest
     public void testRoundTripFlight()
     {
         logger.info("Starting testcase TestWestJetFlight_RoundTrip");
-        selectPage = searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO, false);
+        selectPage = searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO, "false");
 
         Assert.assertTrue(handler.isTextPresent("Select departing flight"), "'Select departing flight' Page was not opened");
         String totalPriceSelectPage = selectPage.getTotalPrice();

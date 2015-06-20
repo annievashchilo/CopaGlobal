@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 import tests.TestData;
 
 
-public class SearchForm
+public class SearchForm extends FormDecorator
 {
 
     private static Logger logger = Logger.getLogger(SearchForm.class.getName());
@@ -46,32 +46,42 @@ public class SearchForm
     private static WebElement returnCalendarIcon;
     @FindBy(xpath = "//a[contains(text(),'Close')]")
     private static WebElement closeCalendar;
+    protected final String pageName = "Search a flight";
     public String DATE = "//a[@onclick='calendar.setDay({year:[YEAR],month:[MONTH],day:[DAY]});return false']";
 
 
-    public SearchForm()
+    public SearchForm(Form decoratedForm)
     {
+        super(decoratedForm);
         PageFactory.initElements(Utils.getHandler(), this);
     }
 
 
-    public void fillSearchForm(String from, String to, boolean isOW)
+    public void fill(String from, String to, String isOW)
     {
+        logger.info("Fill the page:\n" + getPageName());
         String numberOfAdults = "1";
 
         roundTrip.click();
         setDestinations(from, to);
 
         setDates(TestData.Dates.YEAR, TestData.Dates.DEPARTURE_MONTH, TestData.Dates.DEPARTURE_DAY,
-                TestData.Dates.YEAR, TestData.Dates.ARRIVAL_MONTH, TestData.Dates.ARRIVAL_DAY, isOW);
+                TestData.Dates.YEAR, TestData.Dates.ARRIVAL_MONTH, TestData.Dates.ARRIVAL_DAY,
+                Boolean.parseBoolean(isOW));
 
         Select dropdownADT = new Select(adults);
         dropdownADT.selectByValue(numberOfAdults);
     }
 
-    public void searchFlights(String from, String to, boolean isOW)
+    @Deprecated
+    @Override
+    public void fill() {
+
+    }
+
+    public void searchFlights(String from, String to, String isOW)
     {
-        fillSearchForm(from, to, isOW);
+        fill(from, to, isOW);
 
         search.click();
         Utils.getHandler().waitForPageToLoad();
@@ -125,15 +135,11 @@ public class SearchForm
         try
         {
             // set origin location
-//            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
-//                    route_from, from);
             route_from.sendKeys(from);
             Thread.sleep(1000);
             route_from.sendKeys(Keys.RETURN);
 
             // set destination
-//            Utils.getHandler().m_driver.executeScript("arguments[0].setAttribute('value', arguments[1])",
-//                    route_to, to);
             route_to.sendKeys(to);
             Thread.sleep(1000);
             route_to.sendKeys(Keys.RETURN);
@@ -146,5 +152,11 @@ public class SearchForm
         {
             logger.error(e);
         }
+    }
+
+
+    @Override
+    public String getPageName() {
+        return pageName;
     }
 }

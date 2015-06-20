@@ -34,7 +34,8 @@ public class SelectSeatsPage extends Page
 
     public void verifyGuestName(String expectedName)
     {
-        Assert.assertEquals(getGuestName(), expectedName, "Names are not equal. Expected: " + expectedName + ". Actual: " + getGuestName());
+        Assert.assertEquals(getGuestName(), expectedName,
+                "Names are not equal. Expected: " + expectedName + ". Actual: " + getGuestName());
     }
 
 }

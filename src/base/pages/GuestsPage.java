@@ -1,12 +1,13 @@
 package base.pages;
 
+import base.elements.SimpleForm;
 import base.elements.TravellersForm;
 import base.utils.Utils;
 
 public class GuestsPage extends Page
 {
 
-    public static TravellersForm travelForm = new TravellersForm();
+    public static TravellersForm travelForm = new TravellersForm(new SimpleForm());
 
     public SelectSeatsPage nextPage()
     {

@@ -46,7 +46,7 @@ public class Runner
     public static void run()
     {
         initPages();
-        runGrid();
+        //runGrid();
         handler = Utils.getHandler();
         handler.open(Utils.getURL());
 //        handler.waitForPageToLoad(Utils.timeout);
