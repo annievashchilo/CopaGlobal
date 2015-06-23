@@ -57,20 +57,54 @@ public class SearchForm extends FormDecorator
     }
 
 
-    public void fill(String from, String to, String isOW)
+    public void fill(String from, String to, String isOW, String tripType)
     {
         logger.info("Fill the page:\n" + getPageName());
         String numberOfAdults = "1";
 
-        roundTrip.click();
+        setTripType(tripType);
+
         setDestinations(from, to);
 
         setDates(TestData.Dates.YEAR, TestData.Dates.DEPARTURE_MONTH, TestData.Dates.DEPARTURE_DAY,
                 TestData.Dates.YEAR, TestData.Dates.ARRIVAL_MONTH, TestData.Dates.ARRIVAL_DAY,
-                Boolean.parseBoolean(isOW));
+                tripType);
 
-        Select dropdownADT = new Select(adults);
-        dropdownADT.selectByValue(numberOfAdults);
+        setTravellers("ADT", numberOfAdults);
+
+    }
+
+    public void setTripType(String tripType) {
+        if (tripType.equalsIgnoreCase("RT")) {
+            roundTrip.click();
+            logger.info("Select Rount Trip");
+        } else if (tripType.equalsIgnoreCase("OW")) {
+            oneWay.click();
+            logger.info("Select One Way");
+        } else if (tripType.equalsIgnoreCase("MC")) {
+            multiCity.click();
+            logger.info("Select Multi City");
+        } else {
+            logger.error("Unknown provided trip type");
+        }
+    }
+
+    public void setTravellers(String type, String amount) {
+        if (type.equalsIgnoreCase("ADT")) {
+            Select dropdownADT = new Select(adults);
+            dropdownADT.selectByValue(amount);
+            logger.info("Select " + type + " traveller, amount: " + amount);
+        } else if (type.equalsIgnoreCase("CH")) {
+            Select dropdownCH = new Select(children);
+            dropdownCH.selectByValue(amount);
+            logger.info("Select " + type + " traveller, amount: " + amount);
+        } else if (type.equalsIgnoreCase("INF")) {
+            Select dropdownINF = new Select(infants);
+            dropdownINF.selectByValue(amount);
+            logger.info("Select " + type + " traveller, amount: " + amount);
+        } else {
+            logger.error("Unknown provided travellers type");
+        }
     }
 
     @Deprecated
@@ -82,20 +116,17 @@ public class SearchForm extends FormDecorator
     public void searchFlights(String from, String to, String isOW)
     {
         fill(from, to, isOW);
-
         search.click();
         Utils.getHandler().waitForPageToLoad();
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,
-                         String arrivalYear, String arrivalMonth, String arrivalDay, boolean isOW)
+                         String arrivalYear, String arrivalMonth, String arrivalDay, String tripType)
             throws NoSuchElementException
     {
         logger.info("Setting dates");
         try
         {
-
-
             String departDate = DATE
                     .replace("[YEAR]", departureYear)
                     .replace("[MONTH]", departureMonth)
@@ -109,11 +140,13 @@ public class SearchForm extends FormDecorator
 
             departCalendarIcon.click();
             Utils.getHandler().findElement(By.xpath(departDate)).click();
+            logger.info("Set departure day");
 
-            if (!isOW)
+            if (!tripType.equalsIgnoreCase("OW"))
             {
                 returnCalendarIcon.click();
                 Utils.getHandler().findElement(By.xpath(returnDate)).click();
+                logger.info("Set return day");
             }
 
             if (closeCalendar.isDisplayed())

@@ -1,16 +1,16 @@
-package base.pages;
+package base.bdd.bdd_pages;
 
 import base.utils.Utils;
 import net.thucydides.core.annotations.DefaultUrl;
+import net.thucydides.core.pages.PageObject;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @DefaultUrl("https://booking.westjet.com/InternetBooking/AirLowFareSearchExternal.do")
-public class SelectPage extends Page
-{
-    private static Logger logger = Logger.getLogger(SelectPage.class.getName());
+public class BDDSelectPage extends PageObject {
+    private static Logger logger = Logger.getLogger(BDDSelectPage.class.getName());
     @FindBy(linkText = "Select departing flight")
     private static WebElement selectPage;
     @FindBy(xpath = "//td[@id='summaryBot_Left_botTotalPrice']")
@@ -19,32 +19,26 @@ public class SelectPage extends Page
     private static WebElement buttonNext;
 
 
-    public SelectPage()
-    {
+    public BDDSelectPage() {
         PageFactory.initElements(Utils.getHandler(), this);
     }
 
-    public void verifySelectPageOpened()
-    {
-        if (!selectPage.isDisplayed())
-        {
+    public void verifySelectPageOpened() {
+        if (!selectPage.isDisplayed()) {
             logger.error("Neccessary Flight Selection Page was not opened.");
             Utils.getHandler().quit();
         }
     }
 
-    public String getTotalPrice()
-    {
+    public String getTotalPrice() {
         return totalPrice.getText();
     }
 
-    public ReviewPage nextPage()
-    {
-        if (buttonNext.isEnabled())
-        {
+    public BDDReviewPage nextPage() {
+        if (buttonNext.isEnabled()) {
             buttonNext.click();
         }
         Utils.getHandler().waitForPageToLoad();
-        return new ReviewPage();
+        return new BDDReviewPage();
     }
 }

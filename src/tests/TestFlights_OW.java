@@ -26,7 +26,7 @@ public class TestFlights_OW extends BaseTest
     public void testOneWayFlight()
     {
         logger.info("Starting testcase TestWestJetFlight_OneWay");
-        selectPage = searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO, "true");
+        selectPage = searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO, "OW");
 
         Assert.assertTrue(handler.isTextPresent("Select departing flight"), "'Select departing flight' Page was not opened");
         String totalPriceSelectPage = selectPage.getTotalPrice();
