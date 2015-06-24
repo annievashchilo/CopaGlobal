@@ -116,8 +116,12 @@ public class SearchForm extends FormDecorator
     public void searchFlights(String from, String to, String isOW)
     {
         fill(from, to, isOW);
-        search.click();
+        submitForm();
         Utils.getHandler().waitForPageToLoad();
+    }
+
+    public void submitForm() {
+        search.click();
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,

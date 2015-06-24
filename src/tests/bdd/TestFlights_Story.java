@@ -1,7 +1,6 @@
 package tests.bdd;
 
 import base.bdd.steps.SearchFlightSteps;
-import base.pages.GuestsPage;
 import base.requirements.SearchFlightsApplication;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.ManagedPages;
@@ -9,11 +8,11 @@ import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.Story;
 import net.thucydides.core.pages.Pages;
 import net.thucydides.junit.runners.ThucydidesRunner;
+import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import tests.TestData;
 
 
 @RunWith(ThucydidesRunner.class)
@@ -28,57 +27,26 @@ public class TestFlights_Story extends BaseTest_BDD {
     public Pages pages;
 
     @Steps
-    public SearchFlightSteps steps;
+    SearchFlightSteps searchFlight;
 
-    @Test
-    public void testRoundTripFlight(String flightType, String from, String to,
-                                    String travellersType, String travellersAmount) {
-//        testSearchFlight(flightType);
-        searchFlight(flightType, from, to, travellersType, travellersAmount);
+    @Given("The user opened the first search page")
+    public void givenTheStartSearchPageIsOpened() {
+        searchFlight.isTheStartSearchPage();
     }
 
-    @Test
-    public void testOneWayFlight(String flightType, String from, String to,
-                                 String travellersType, String travellersAmount) {
-//        testSearchFlight(flightType);
-        searchFlight(flightType, from, to, travellersType, travellersAmount);
+    @When("the user is looking for flight from '$from' route and to '$to' destination and '$tripType' trip type")
+    public void whenTheUserIsLookingForFlight(String from, String to, String tripType) {
+        searchFlight.look_for_flight(from, to);
     }
 
-    private void testSearchFlight(String flightType) {
-        logger.info("Starting testcase TestWestJetFlight_" + flightType);
-        selectPage = searchPage.search(TestData.Destinations.ROUTE_FROM, TestData.Destinations.ROUTE_TO, flightType);
-
-        Assert.assertTrue(handler.isTextPresent("Select departing flight"), "'Select departing flight' Page was not opened");
-        String totalPriceSelectPage = selectPage.getTotalPrice();
-        reviewPage = selectPage.nextPage();
-
-        Assert.assertTrue(handler.isTextPresent("Review Flights"), "'Review Flights' Page was not opened");
-        reviewPage.verifyRoutesPresent();
-        String totalPriceReviewPage = reviewPage.getTotalPrice();
-        verifyTotalPricesEqual(totalPriceSelectPage, totalPriceReviewPage);
-        guestsPage = reviewPage.nextPage();
-
-        Assert.assertTrue(handler.isTextPresent("Guest information"), "'Guest information' Page was not opened");
-        GuestsPage.travelForm.fill();
-        seatsPage = guestsPage.nextPage();
-
-        Assert.assertTrue(handler.isTextPresent("Select your seats"), "'Select your seats' Page was not opened");
-        String expectedGuestName = TestData.TravellerInfo.travellerTitle + " " + TestData.TravellerInfo.firstName + " " + TestData.TravellerInfo.lastName;
-        seatsPage.verifyGuestName(expectedGuestName);
-        logger.info("Test passed successfully -> OK!");
-
+    @Then("the user should see select page is opened after submit form")
+    public void thenUserShouldSeeSelectPageOpened() {
+        searchFlight.selectPageShouldBeOpened();
     }
 
-    private void searchFlight(String flightType, String from, String to,
-                              String travellersType, String travellersAmount) {
-        logger.info("Starting testcase TestWestJetFlight_" + flightType);
-        selectPage = steps.fillSearchPage(from, to, flightType, travellersType, travellersAmount);
-
-        reviewPage = steps.completeSelectPage(selectPage);
-        guestsPage = steps.completeReviewPage(reviewPage);
-        seatsPage = steps.completeGuestsPage(guestsPage);
-        steps.completeSeatsPage(seatsPage);
-        logger.info("Test passed successfully -> OK!");
+    @Then("Verify the routes are present")
+    public void thenVerifyRoutesPresent() {
+        searchFlight.thenVerifyRoutesPresent();
     }
 
 }

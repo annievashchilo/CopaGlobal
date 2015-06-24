@@ -12,6 +12,18 @@ public class TestData
         public static final String ROUTE_TO = "YVR";
     }
 
+    public class TripTypes {
+        public static final String ROUND_TRIP = "RT";
+        public static final String ONE_WAY = "OW";
+        public static final String MULTI_CITY = "MC";
+    }
+
+    public class TravellersType {
+        public static final String ADULT = "ADT";
+        public static final String CHILD = "CH";
+        public static final String INF = "INF";
+    }
+
     public class Dates
     {
 

@@ -10,14 +10,16 @@ import net.thucydides.core.steps.ScenarioSteps;
 import org.testng.Assert;
 import tests.TestData;
 
+import java.util.logging.Logger;
+
 public class SearchFlightSteps extends ScenarioSteps {
 
+    private static Logger logger = Logger.getLogger(SearchFlightSteps.class.getName());
     public BDDSearchPage searchPage = new BDDSearchPage();
-    public BDDSelectPage selectPage;
-    public BDDReviewPage reviewPage;
-    public BDDGuestsPage guestsPage;
-    public BDDSelectSeatsPage seatsPage;
-
+    public BDDSelectPage selectPage = new BDDSelectPage();
+    public BDDReviewPage reviewPage = new BDDReviewPage();
+    public BDDGuestsPage guestsPage = new BDDGuestsPage();
+    public BDDSelectSeatsPage seatsPage = new BDDSelectSeatsPage();
     protected Handler handler = Utils.getHandler();
 
     public SearchFlightSteps(Pages pages) {
@@ -25,61 +27,39 @@ public class SearchFlightSteps extends ScenarioSteps {
         searchPage = getPages().get(BDDSearchPage.class);
     }
 
+    //1
     @Step
-    public BDDSelectPage fillSearchPage(String fromRoute, String toRoute,
-                                        String tripType, String travellerType, String amount) {
-        openSearchPage();
-        searchPage.setRoutes(fromRoute, toRoute);
-        searchPage.setDates(tripType);
-        searchPage.setTravellers(travellerType, amount);
-        return new BDDSelectPage();
-    }
-
-    private void openSearchPage() {
+    public void isTheStartSearchPage() {
         searchPage.open();
     }
 
-
+    //2
     @Step
-    public BDDReviewPage completeSelectPage(BDDSelectPage selectPage) {
-        this.selectPage = selectPage;
+    public void look_for_flight(String fromRoute, String toRoute) {
+        searchPage.setTripType(TestData.TripTypes.ROUND_TRIP);
+        searchPage.setRoutes(fromRoute, toRoute);
+        searchPage.setDates(TestData.TripTypes.ROUND_TRIP);
+        searchPage.setTravellers(TestData.TravellersType.ADULT, "1");
+        searchPage.submit();
+    }
+
+    //3
+    @Step
+    public void selectPageShouldBeOpened() {
+        completeSelectPage();
+    }
+
+    //4
+    @Step
+    public void thenVerifyRoutesPresent() {
+        reviewPage.verifyRoutesPresent();
+    }
+
+
+    public void completeSelectPage() {
         Assert.assertTrue(handler.isTextPresent("Select departing flight"),
                 "'Select departing flight' Page was not opened");
         this.selectPage.nextPage();
-        return new BDDReviewPage();
     }
-
-
-    @Step
-    public BDDGuestsPage completeReviewPage(BDDReviewPage reviewPage) {
-        this.reviewPage = reviewPage;
-        Assert.assertTrue(handler.isTextPresent("Review Flights"),
-                "'Review Flights' Page was not opened");
-        reviewPage.verifyRoutesPresent();
-        this.reviewPage.nextPage();
-        return new BDDGuestsPage();
-    }
-
-    @Step
-    public BDDSelectSeatsPage completeGuestsPage(BDDGuestsPage guestsPage) {
-        this.guestsPage = guestsPage;
-        Assert.assertTrue(handler.isTextPresent("Guest information"),
-                "'Guest information' Page was not opened");
-        this.guestsPage.travelForm.fill();
-        this.guestsPage.nextPage();
-        return new BDDSelectSeatsPage();
-    }
-
-    @Step
-    public void completeSeatsPage(BDDSelectSeatsPage seatsPage) {
-        this.seatsPage = seatsPage;
-        Assert.assertTrue(handler.isTextPresent("Select your seats"),
-                "'Select your seats' Page was not opened");
-        String expectedGuestName = TestData.TravellerInfo.travellerTitle + " "
-                + TestData.TravellerInfo.firstName + " "
-                + TestData.TravellerInfo.lastName;
-        seatsPage.verifyGuestName(expectedGuestName);
-    }
-
 
 }

@@ -15,6 +15,10 @@ public class BDDSearchPage extends PageObject {
         return new BDDSelectPage();
     }
 
+    public void submit() {
+        searchForm.submitForm();
+    }
+
     public void setRoutes(String from, String to) {
         searchForm.setDestinations(from, to);
     }
