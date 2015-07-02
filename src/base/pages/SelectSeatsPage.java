@@ -36,6 +36,7 @@ public class SelectSeatsPage extends Page
     {
         Assert.assertEquals(getGuestName(), expectedName,
                 "Names are not equal. Expected: " + expectedName + ". Actual: " + getGuestName());
+        Utils.getHandler().takeScreenshot("SelectSeatsPage.png", buttonNext);
     }
 
 }

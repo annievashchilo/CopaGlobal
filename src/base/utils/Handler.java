@@ -3,10 +3,7 @@ package base.utils;
 import main.Runner;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
@@ -46,14 +43,31 @@ public class Handler extends RemoteWebDriver {
 
 
     public String takeScreenshot(String fileName) {
-        logger.debug("Trying perform takeScreenshot action with name: " + fileName);
+        logger.info("Trying perform takeScreenshot action with name: " + fileName);
         StringBuilder screenshotPath = new StringBuilder(Utils.getPathToScreenshots()).append(System.currentTimeMillis());
+
 
         File scrFile = m_driver.getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(scrFile, new File(screenshotPath.toString()));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        return screenshotPath.toString();
+    }
+
+    public String takeScreenshot(String fileName, WebElement elementToHighlight) {
+        logger.debug("Trying perform takeScreenshot action with name: " + fileName);
+        StringBuilder screenshotPath = new StringBuilder(Utils.getPathToScreenshots()).append(System.currentTimeMillis()).append(fileName);
+
+        File scrFile = ((TakesScreenshot) m_driver).getScreenshotAs(OutputType.FILE);
+
+        try {
+            FileUtils.copyFile(scrFile, new File(screenshotPath.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.warn("Failed to take screenshot");
         }
 
         return screenshotPath.toString();
@@ -72,6 +86,7 @@ public class Handler extends RemoteWebDriver {
             return b;
         } catch (Exception e)
         {
+            highlightElement("ScreenshotTextNotPresent.png", m_driver.findElement(By.partialLinkText(txtValue)));
             System.out.println(e.getMessage());
         }
         return b;
@@ -89,6 +104,7 @@ public class Handler extends RemoteWebDriver {
             Thread.sleep(millis);
         } catch (InterruptedException e)
         {
+            takeScreenshot("SleepErrorScreenshot.png");
             logger.trace(e);
         }
     }
@@ -158,12 +174,14 @@ public class Handler extends RemoteWebDriver {
         m_driver.quit();
     }
 
-    public void highlightElement(RemoteWebDriver driver, WebElement element)
+    public void highlightElement(String fileName, WebElement element)
     {
         String bg = element.getCssValue("backgroundColor");
-        JavascriptExecutor js = driver;
+        JavascriptExecutor js = m_driver;
         js.executeScript("arguments[0].style.backgroundColor = '" + "red" + "'", element);
         sleep(2000);
+        js.executeScript("scroll(0, 250);");
+        takeScreenshot(fileName, element);
         js.executeScript("arguments[0].style.backgroundColor = '" + bg + "'", element);
     }
 

@@ -122,6 +122,7 @@ public class SearchForm extends FormDecorator
 
     public void submitForm() {
         search.click();
+        Utils.getHandler().highlightElement("SubmitFormScreenshot.png", route_from);
     }
 
     public void setDates(String departureYear, String departureMonth, String departureDay,

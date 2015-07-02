@@ -35,6 +35,7 @@ public class SelectPage extends Page
 
     public String getTotalPrice()
     {
+        Utils.getHandler().takeScreenshot("TotalPricePage.png", totalPrice);
         return totalPrice.getText();
     }
 
